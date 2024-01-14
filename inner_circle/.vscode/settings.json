@@ -37,6 +37,7 @@
         "libft.h": "c",
         "ft_printf_bonus.h": "c",
         "fractol_bonus.h": "c",
-        "checker_bonus.h": "c"
+        "checker_bonus.h": "c",
+        "time.h": "c"
     }
 }
