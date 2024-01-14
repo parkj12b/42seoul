@@ -1,6 +1,11 @@
 NAME = libftprintf.a
 
-SRCS = ft_printf.c
+SRCS = ft_printf.c ft_printf_utils.c ft_printf_utils2.c ft_printf_numlen.c \
+ft_printf_format.c ft_printf_format_d.c ft_printf_format_x.c
+
+BONUS_SRCS = $(SRCS:.c=_bonus.c)
+
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 OBJS = $(SRCS:.c=.o)
 
@@ -10,21 +15,23 @@ CC = cc
 
 %.o: %.c
 	$(CC) -c $(FLAGS) $< -o $@
-	
-all: $(OBJS) 
-	$(CC) $(FLAGS) $(SRCS) main.c 
-	ar rcs $(NAME) $(OBJS)
-	
-bonus: all
-	
-test:
-	$(CC) $(FLAGS) -g test.c
-	./a.out
+
+all: $(OBJS)
+	make -C ./libft bonus
+	ar rucs $(NAME) $(OBJS)
+
+bonus: $(BONUS_OBJS)
+	make -C ./libft bonus
+	ar rucs $(NAME) $(BONUS_OBJS)
 
 re: fclean all
 
 clean:
-	rm -f *.o
+	rm -f $(OBJS) $(BONUS_OBJS)
+	make -C ./libft clean
 
 fclean: clean
 	rm -f $(NAME)
+	make -C ./libft fclean
+
+.PHONY: bonus re all clean fclean libft

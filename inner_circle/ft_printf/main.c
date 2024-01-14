@@ -11,7 +11,7 @@ void	checks(void)
 
 int main()
 {
-	atexit(checks);
+	//atexit(checks);
 	//ft_printf("", "hello", "it's", "me", "jacob");	
 	/*
 	printf("|%10cddd\n", 'a');
@@ -110,6 +110,7 @@ int main()
 //	ft_printf("%.d\n", 0);
 
 //	printf("%5%");	
-//	ft_printf("%5%");	
-	ft_printf("0x%p-", (void *)ULONG_MAX);
+//	ft_printf("%5%");
+	printf("%60.10d\n", 10000);
+	printf("%60.10d\n", 10000);
 }
