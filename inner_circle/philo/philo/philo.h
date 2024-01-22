@@ -6,14 +6,13 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:03:37 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/14 21:30:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:10:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 # define ERROR 1
-# include <string.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -23,19 +22,23 @@
 typedef struct s_args
 {
 	pthread_mutex_t	*fork;
-    int				num_philo;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	finish_mutex;
+	struct timeval	start_time;
 	int				time_to_die;
+	int				num_philo;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_must_eat;
-	int				start_time;
 	int				finished_philo;
 	int				finish_flag;
-}   t_args;
+}	t_args;
 
 typedef struct s_philo
 {
 	struct timeval	time_last_meal;
+	pthread_mutex_t	last_meal_mutex;
+	pthread_mutex_t	meal_count_mutex;
 	pthread_t		thread;
 	t_args			*arg;
 	int				meal_count;
@@ -44,4 +47,36 @@ typedef struct s_philo
 	int				right_fork;
 }	t_philo;
 
-# endif
+/* main.c */
+int		print_error(char *message);
+void	free_mutex(t_args *t_args);
+void	free_philo(t_philo **philo, t_args *t_args);
+
+/* philo_action.c */
+void	printf_dead(int philo_num, t_args *t_args);
+void	printf_philo(int philo_num, char *message, t_args *t_args);
+void	philo_eat(t_philo *philo, t_args *t_args);
+void	philo_sleep(t_philo *philo, t_args *t_args);
+
+/* philo_init.c */
+int		init_t_args(t_args *t_args, int argc, char **argv);
+int		init_mutex(t_args *t_args);
+t_philo	**init_philo(t_args *t_args);
+
+/* philo_routine1.c */
+int		start_philo(t_philo **philo, t_args *t_args);
+void	*philo_routine(void *arg);
+void	join_thread(t_philo **philo, t_args *t_args);
+
+/* philo_routine2.c */
+int		check_dead_philo(t_philo **philo, t_args *t_args);
+int		check_finish_flag(t_args *t_args);
+
+/* philo_util.c */
+size_t	ft_strlen(const char *s);
+int		ft_atoi(const char *str);
+int		ft_usleep(size_t milliseconds);
+size_t	get_current_time(void);
+size_t	get_timestamp(t_args *t_args);
+
+#endif
