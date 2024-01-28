@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/28 18:16:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:26:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	philo_routine(t_philo *philo, t_args *t_args)
 		printf_philo(philo->philo_num, "is thinking", t_args);
 	}
 	pthread_join(philo->thread, NULL);
+	exit(0);
 }
 
 void	start_monitor(t_philo *philo, t_args *t_args)
