@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/22 18:16:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/22 22:27:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	philo_routine(t_philo *philo, t_args *t_args)
 {
 	start_monitor(philo, t_args);
 	printf_philo(philo->philo_num, "is thinking", t_args);
-	if (philo->philo_num == 1)
+	if (t_args->num_philo == 1)
 		printf_philo(philo->philo_num, "has taken a fork", t_args);
 	while (t_args->num_philo > 1)
 	{

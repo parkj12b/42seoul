@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:03:45 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/22 17:04:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/22 22:26:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	printf_philo(int philo_num, char *message, t_args *t_args)
 void	philo_eat(t_philo *philo, t_args *t_args)
 {
 	pthread_mutex_lock(&t_args->fork[philo->left_fork]);
-	pthread_mutex_lock(&t_args->fork[philo->right_fork]);
 	printf_philo(philo->philo_num, "has taken a fork", t_args);
+	pthread_mutex_lock(&t_args->fork[philo->right_fork]);
 	printf_philo(philo->philo_num, "has taken a fork", t_args);
 	pthread_mutex_lock(&philo->last_meal_mutex);
 	gettimeofday(&(philo->time_last_meal), NULL);
