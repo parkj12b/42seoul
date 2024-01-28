@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/28 18:00:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:16:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	start_child(t_args *t_args, t_philo **philo)
 		parent_wait(t_args);
 }
 
-void	safe_exit(t_philo *philo)
-{
+// void	safe_exit(t_philo *philo)
+// {
 	
-}
+// }
 
 void	philo_routine(t_philo *philo, t_args *t_args)
 {
