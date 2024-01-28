@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/28 17:06:51 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:00:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	start_child(t_args *t_args, t_philo **philo)
 		parent_wait(t_args);
 }
 
+void	safe_exit(t_philo *philo)
+{
+	
+}
+
 void	philo_routine(t_philo *philo, t_args *t_args)
 {
 	start_monitor(philo, t_args);
@@ -45,7 +50,7 @@ void	philo_routine(t_philo *philo, t_args *t_args)
 		philo_eat(philo, t_args);
 		if (t_args->num_must_eat >= 0
 			&& philo->meal_count == t_args->num_must_eat)
-			exit(0);
+			break ;
 		philo_sleep(philo, t_args);
 		printf_philo(philo->philo_num, "is thinking", t_args);
 	}
