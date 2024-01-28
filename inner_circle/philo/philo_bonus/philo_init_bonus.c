@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:29:01 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/22 17:36:47 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/28 16:26:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	init_t_args(t_args *t_args)
 			0644, 1);
 	t_args->finish_lock = sem_open("sem_finish_lock", O_CREAT,
 			0644, 1);
+	t_args->child_pid = malloc(sizeof(int) * t_args->num_philo);
+	if (!t_args->child_pid)
+		throw_error("malloc failed");
 }
 
 void	parse_input(t_args *t_args, int argc, char **argv)

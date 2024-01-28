@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/22 22:27:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:06:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	start_child(t_args *t_args, t_philo **philo)
 			pid = fork();
 		if (pid == 0)
 			philo_routine(philo[i], t_args);
+		else
+			t_args->child_pid[i] = pid;
 	}
 	if (pid != 0)
 		parent_wait(t_args);
@@ -32,7 +34,10 @@ void	start_child(t_args *t_args, t_philo **philo)
 void	philo_routine(t_philo *philo, t_args *t_args)
 {
 	start_monitor(philo, t_args);
+	gettimeofday(&philo->time_last_meal, NULL);
 	printf_philo(philo->philo_num, "is thinking", t_args);
+	if (philo->philo_num % 2 == 0)
+		usleep(100);
 	if (t_args->num_philo == 1)
 		printf_philo(philo->philo_num, "has taken a fork", t_args);
 	while (t_args->num_philo > 1)
@@ -62,7 +67,8 @@ void	*monitor(void *arg)
 
 	philo = (t_philo *) arg;
 	t_args = philo->arg;
-	while (1)
+	while (t_args->num_must_eat >= 0
+			&& philo->meal_count == t_args->num_must_eat)
 	{
 		gettimeofday(&now, NULL);
 		diff = (now.tv_sec - philo->time_last_meal.tv_sec) * 1000000

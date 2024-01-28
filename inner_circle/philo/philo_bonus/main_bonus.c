@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:37:48 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/22 18:32:06 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:02:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,31 @@ void	parent_wait(t_args *t_args)
 	{
 		waitpid(-1, &exit_status, 0);
 		if (exit_status != 0)
-			kill(0, SIGKILL);
+		{
+			i = -1;
+			while (++i < t_args->num_philo)
+			{
+				kill(t_args->child_pid[i], SIGKILL);
+			}
+			break ;
+		}
 	}
+}
+
+void	cleanup(t_args *t_args, t_philo **philo)
+{
+	int	i;
+
+	i = -1;
+	sem_unlink("sem_fork");
+	sem_unlink("sem_print_lock");
+	sem_unlink("sem_finish_lock");
+	while (++i < t_args->num_philo)
+	{
+		free(philo[i]);
+	}
+	free(philo);
+	free(t_args->child_pid);
 }
 
 void	check()
@@ -49,15 +72,15 @@ void	check()
 
 int	main(int argc, char **argv)
 {
+	atexit(check);
 	t_args	t_args;
 	t_philo	**philo;
 
-
-	atexit(check);
 	if (argc != 5 && argc != 6)
 		throw_error("invalid number of arguments");
 	parse_input(&t_args, argc, argv);
 	init_t_args(&t_args);
 	philo = init_philo(&t_args);
 	start_child(&t_args, philo);
+	cleanup(&t_args, philo);
 }

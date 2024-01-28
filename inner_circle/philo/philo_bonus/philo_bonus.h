@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:38:00 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/22 17:38:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/28 17:14:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_args
 	sem_t			*fork;
 	sem_t			*print_lock;
 	sem_t			*finish_lock;
+	int				*child_pid;
 	int				num_philo;
 	int				time_to_die;
 	int				time_to_eat;
