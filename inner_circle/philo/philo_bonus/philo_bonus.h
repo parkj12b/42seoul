@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:38:00 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/28 17:14:51 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:02:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 # define PHILO_BONUS_H
 
 # include <errno.h>
+# include <fcntlh.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <pthread.h>
 # include <semaphore.h>
 # include <signal.h>
