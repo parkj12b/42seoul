@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:58:04 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 16:32:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:37:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,8 @@ void	free_philo(t_philo **philo, t_args *t_args)
 	free(philo);
 }
 
-void	check()
-{
-	system("leaks philo");
-}
-
 int	main(int argc, char **argv)
 {
-	atexit(check);
 	t_args	t_args;
 	t_philo	**philo;
 	int		error_num;
