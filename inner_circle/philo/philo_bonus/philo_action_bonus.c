@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:32:44 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 17:54:48 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:20:53 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	philo_eat(t_philo *philo, t_args *t_args)
 	printf_philo(philo->philo_num, "has taken a fork", t_args);
 	sem_wait(t_args->fork);
 	printf_philo(philo->philo_num, "has taken a fork", t_args);
+	sem_wait(philo->last_meal_lock);
 	gettimeofday(&philo->time_last_meal, NULL);
+	sem_post(philo->last_meal_lock);
 	printf_philo(philo->philo_num, "is eating", t_args);
 	ft_usleep(t_args->time_to_eat, philo);
 	philo->meal_count++;

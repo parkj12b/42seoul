@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 21:09:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:19:53 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void	start_child(t_args *t_args, t_philo **philo)
 
 void	philo_routine(t_philo *philo, t_args *t_args)
 {
+	sem_wait(philo->last_meal_lock);
 	gettimeofday(&philo->time_last_meal, NULL);
+	sem_post(philo->last_meal_lock);
 	pthread_create(&(philo->thread), NULL, check_dead, philo);
 	if (t_args->num_philo == 1)
 		printf_philo(philo->philo_num, "has taken a fork", t_args);
