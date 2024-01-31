@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:29:01 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 21:36:43 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:50:07 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_t_args(t_args *t_args)
 	t_args->finish_lock = sem_open("sem_finish_lock", O_CREAT,
 			0644, 1);
 	t_args->process_lock = sem_open("process_lock", O_CREAT,
-			0644, 0);
+			0644, 1);
 	t_args->child_pid = malloc(sizeof(int) * t_args->num_philo);
 	if (!t_args->child_pid)
 		throw_error("malloc failed");
