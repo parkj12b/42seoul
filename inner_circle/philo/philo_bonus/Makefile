@@ -5,7 +5,7 @@ CFLAGS = -Wall -Werror -Wextra
 NAME = philo_bonus
 
 SRCS = main_bonus.c philo_action_bonus.c philo_init_bonus.c philo_routine_bonus.c \
-		philo_utils_bonus.c
+		philo_utils_bonus.c philo_utils2_bonus.c
 
 OBJS = $(SRCS:.c=.o)
 

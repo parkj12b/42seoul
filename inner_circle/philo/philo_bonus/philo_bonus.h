@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:38:00 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 15:56:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:13:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_philo
 {
 	struct timeval	time_last_meal;
 	pthread_t		thread;
+	sem_t			*last_meal_lock;
+	char			*last_meal_lock_str;
 	t_args			*arg;
 	int				meal_count;
 	int				philo_num;
@@ -81,4 +83,7 @@ size_t	get_timestamp(t_args *t_args);
 size_t	ft_strlen(const char *s);
 int		ft_usleep(size_t milliseconds, t_philo *philo);
 
+/* philo_utils2_bonus.c */
+char	*ft_itoa(int n);
+char	*ft_strcat(char *s1, char *s2);
 #endif

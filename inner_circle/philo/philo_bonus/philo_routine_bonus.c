@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 15:48:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:09:44 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ void	*check_dead(void *arg)
 	while (1)
 	{
 		gettimeofday(&now, NULL);
+		sem_wait(philo->last_meal_lock);
 		diff = (now.tv_sec - philo->time_last_meal.tv_sec) * 1000000
 			+ (now.tv_usec - philo->time_last_meal.tv_usec);
+		sem_post(philo->last_meal_lock);
 		sem_wait(t_args->finish_lock);
 		if (diff >= t_args->time_to_die * 1000)
 		{

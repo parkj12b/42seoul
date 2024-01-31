@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:29:01 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 15:56:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:10:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ void	parse_input(t_args *t_args, int argc, char **argv)
 		throw_error("invalid argument");
 }
 
+void	init_last_meal_lock(t_philo *philo)
+{
+	char	*philo_num;
+
+	philo_num = ft_itoa(philo->philo_num);
+	philo->last_meal_lock_str = ft_strcat("last_meal_lock_", philo_num);
+	philo->last_meal_lock = sem_open(philo->last_meal_lock_str, 1);
+	free(philo_num);
+}
+
 t_philo	**init_philo(t_args *t_args)
 {
 	t_philo	**philo;
@@ -69,6 +79,7 @@ t_philo	**init_philo(t_args *t_args)
 		philo[i]->right_fork = i + 1;
 		philo[i]->meal_count = 0;
 		philo[i]->arg = t_args;
+		init_last_meal_lock(philo[i]);
 	}
 	philo[i - 1]->right_fork = 0;
 	return (philo);
