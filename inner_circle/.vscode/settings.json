@@ -40,6 +40,9 @@
         "checker_bonus.h": "c",
         "time.h": "c",
         "types.h": "c",
-        "philo_bonus.h": "c"
+        "philo_bonus.h": "c",
+        "__config": "c",
+        "__node_handle": "c",
+        "pthread.h": "c"
     }
 }

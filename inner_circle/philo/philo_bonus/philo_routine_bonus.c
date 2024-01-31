@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/28 18:26:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:48:05 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,34 @@
 void	start_child(t_args *t_args, t_philo **philo)
 {
 	int		i;
-	pid_t	pid;
 
 	i = -1;
 	while (++i < t_args->num_philo)
 	{
-		if (pid != 0)
-			pid = fork();
-		if (pid == 0)
-			philo_routine(philo[i], t_args);
-		else
-			t_args->child_pid[i] = pid;
+		t_args->child_pid[i] = fork();
+		if (t_args->child_pid[i] < 0)
+			kill(-1, SIGKILL);
+		if (t_args->child_pid[i] == 0)
+			break ;
 	}
-	if (pid != 0)
+	if (i < t_args->num_philo && t_args->child_pid[i] == 0)
+	{
+		sem_wait(t_args->process_lock);
+		philo_routine(philo[i], t_args);
+	}
+	if (t_args->child_pid[0] != 0)
+	{
+		i = -1;
+		while (++i < t_args->num_philo)
+			sem_post(t_args->process_lock);
 		parent_wait(t_args);
+	}
 }
-
-// void	safe_exit(t_philo *philo)
-// {
-	
-// }
 
 void	philo_routine(t_philo *philo, t_args *t_args)
 {
-	start_monitor(philo, t_args);
 	gettimeofday(&philo->time_last_meal, NULL);
-	printf_philo(philo->philo_num, "is thinking", t_args);
-	if (philo->philo_num % 2 == 0)
-		usleep(100);
+	pthread_create(&(philo->thread), NULL, check_dead, philo);
 	if (t_args->num_philo == 1)
 		printf_philo(philo->philo_num, "has taken a fork", t_args);
 	while (t_args->num_philo > 1)
@@ -50,31 +50,23 @@ void	philo_routine(t_philo *philo, t_args *t_args)
 		philo_eat(philo, t_args);
 		if (t_args->num_must_eat >= 0
 			&& philo->meal_count == t_args->num_must_eat)
-			break ;
+			exit(0);
 		philo_sleep(philo, t_args);
 		printf_philo(philo->philo_num, "is thinking", t_args);
 	}
 	pthread_join(philo->thread, NULL);
-	exit(0);
 }
 
-void	start_monitor(t_philo *philo, t_args *t_args)
-{
-	if (pthread_create(&philo->thread, NULL, monitor, philo))
-		throw_error("pthread_create() error");
-}
-
-void	*monitor(void *arg)
+void	*check_dead(void *arg)
 {
 	struct timeval	now;
-	t_philo			*philo;
 	t_args			*t_args;
+	t_philo			*philo;
 	long long		diff;
 
 	philo = (t_philo *) arg;
 	t_args = philo->arg;
-	while (t_args->num_must_eat >= 0
-			&& philo->meal_count == t_args->num_must_eat)
+	while (1)
 	{
 		gettimeofday(&now, NULL);
 		diff = (now.tv_sec - philo->time_last_meal.tv_sec) * 1000000

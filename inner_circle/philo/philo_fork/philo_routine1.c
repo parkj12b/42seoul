@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:56:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/29 16:45:40 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/30 19:40:25 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@ static void	philo_routine_helper(t_philo **philo, t_args **t_args, void **arg)
 {
 	*philo = (t_philo *) *arg;
 	*t_args = (*philo)->arg;
-	if ((*philo)->philo_num % 2 == 0)
-	{
-		while ((*t_args)->startup_count < (*t_args)->num_philo / 2)
-			usleep(500);
-	}
 	if ((*t_args)->num_philo == 1)
 		printf_philo((*philo)->philo_num, "has taken a fork", *t_args);
 }

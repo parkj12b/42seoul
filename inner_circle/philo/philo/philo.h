@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:03:37 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/22 17:10:04 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:07:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_args
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	finish_mutex;
+	pthread_mutex_t	limit_count_mutex;
 	struct timeval	start_time;
 	int				time_to_die;
 	int				num_philo;
@@ -32,6 +33,8 @@ typedef struct s_args
 	int				num_must_eat;
 	int				finished_philo;
 	int				finish_flag;
+	int				startup_count;
+	int				*fork_status;
 }	t_args;
 
 typedef struct s_philo
@@ -46,6 +49,19 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 }	t_philo;
+
+typedef struct s_list_node
+{
+	struct s_list_node	*next;
+	int					philo_num;
+}	t_list_node;
+
+typedef struct s_philo_queue
+{
+	t_list_node	*head;
+	t_list_node	*tail;
+	int			size;
+}	t_philo_queue;
 
 /* main.c */
 int		print_error(char *message);

@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils_bonus.c                                :+:      :+:    :+:   */
+/*   philo_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/22 17:23:21 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/30 22:38:13 by minsepar         ###   ########.fr       */
+/*   Created: 2024/01/22 16:53:12 by minsepar          #+#    #+#             */
+/*   Updated: 2024/01/31 16:08:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -36,12 +46,22 @@ int	ft_atoi(const char *str)
 	return ((int)(num * sign));
 }
 
+int	ft_usleep(size_t milliseconds)
+{
+	size_t	start;
+
+	start = get_current_time();
+	while ((get_current_time() - start) < milliseconds)
+		usleep(100);
+	return (0);
+}
+
 size_t	get_current_time(void)
 {
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
-		throw_custom_error("gettimeofday() error", 1);
+		write(2, "gettimeofday() error\n", 22);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
@@ -52,29 +72,7 @@ size_t	get_timestamp(t_args *t_args)
 
 	gettimeofday(&now, NULL);
 	time = get_current_time()
-		- (t_args->start_time.tv_sec) * 1000
-		- (t_args->start_time.tv_usec) / 1000;
+		- ((t_args->start_time.tv_sec) * 1000
+			+ (t_args->start_time.tv_usec) / 1000);
 	return (time);
-}
-
-int	ft_usleep(size_t milliseconds, t_philo *philo)
-{
-	size_t	start;
-
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
-	{
-		usleep(100);
-	}
-	return (0);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
 }

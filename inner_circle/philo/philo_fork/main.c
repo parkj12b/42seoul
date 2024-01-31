@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:58:04 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/29 16:52:51 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:26:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	free_mutex(t_args *t_args)
 		pthread_mutex_destroy(&(t_args->fork[i]));
 	}
 	pthread_mutex_destroy(&t_args->print_mutex);
-	pthread_mutex_destroy(&t_args->limit_count_mutex);
 	free(t_args->fork);
 }
 

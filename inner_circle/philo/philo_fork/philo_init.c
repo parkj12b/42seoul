@@ -1,52 +1,68 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_init_bonus.c                                 :+:      :+:    :+:   */
+/*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/22 17:29:01 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 15:56:20 by minsepar         ###   ########.fr       */
+/*   Created: 2024/01/22 16:55:42 by minsepar          #+#    #+#             */
+/*   Updated: 2024/01/30 20:11:50 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
-void	init_t_args(t_args *t_args)
+int	init_fork_status(t_args *t_args)
 {
-	sem_unlink("sem_fork");
-	sem_unlink("sem_print_lock");
-	sem_unlink("sem_finish_lock");
-	sem_unlink("process_lock");
-	sem_unlink("half_control_lock");
-	t_args->fork = sem_open("sem_fork", O_CREAT, 0644, t_args->num_philo);
-	t_args->print_lock = sem_open("sem_print_lock", O_CREAT,
-			0644, 1);
-	t_args->half_control_lock = sem_open("half_control_lock", O_CREAT,
-			0644, t_args->num_philo / 2);
-	t_args->finish_lock = sem_open("sem_finish_lock", O_CREAT,
-			0644, 1);
-	t_args->process_lock = sem_open("process_lock", O_CREAT,
-			0644, 0);
-	t_args->child_pid = malloc(sizeof(int) * t_args->num_philo);
-	if (!t_args->child_pid)
-		throw_error("malloc failed");
+	int	i;
+
+	t_args->fork_status = malloc(sizeof(int) * t_args->num_philo);
+	if (!t_args->fork_status)
+		return (ERROR);
+	i = -1;
+	while (++i < t_args->num_philo)
+	{
+		t_args->fork_status[i] = i % 2;
+	}
+	return (0);
 }
 
-void	parse_input(t_args *t_args, int argc, char **argv)
+int	init_t_args(t_args *t_args, int argc, char **argv)
 {
-	gettimeofday(&t_args->start_time, NULL);
+	gettimeofday(&(t_args->start_time), NULL);
 	t_args->num_philo = ft_atoi(argv[1]);
 	t_args->time_to_die = ft_atoi(argv[2]);
 	t_args->time_to_eat = ft_atoi(argv[3]);
 	t_args->time_to_sleep = ft_atoi(argv[4]);
+	t_args->finished_philo = 0;
+	t_args->finish_flag = 0;
 	t_args->num_must_eat = -1;
 	if (argc == 6)
 		t_args->num_must_eat = ft_atoi(argv[5]);
 	if (t_args->num_philo <= 0 || t_args->time_to_die < 0
 		|| t_args->time_to_eat < 0 || t_args->time_to_sleep < 0
 		|| (argc == 6 && t_args->num_must_eat < 0))
-		throw_error("invalid argument");
+		return (ERROR);
+	if (init_mutex(t_args) == ERROR || init_fork_status(t_args) == ERROR)
+		return (ERROR);
+	return (0);
+}
+
+int	init_mutex(t_args *t_args)
+{
+	int	i;
+
+	t_args->fork = malloc(sizeof(pthread_mutex_t) * t_args->num_philo);
+	if (!t_args->fork)
+		return (ERROR);
+	i = -1;
+	while (++i < t_args->num_philo)
+	{
+		pthread_mutex_init(&t_args->fork[i], NULL);
+	}
+	pthread_mutex_init(&t_args->print_mutex, NULL);
+	pthread_mutex_init(&t_args->finish_mutex, NULL);
+	return (0);
 }
 
 t_philo	**init_philo(t_args *t_args)
@@ -56,19 +72,19 @@ t_philo	**init_philo(t_args *t_args)
 
 	philo = malloc(sizeof(t_philo *) * t_args->num_philo);
 	if (!philo)
-		throw_error("malloc failed");
+		return (0);
 	i = -1;
 	while (++i < t_args->num_philo)
 	{
 		philo[i] = malloc(sizeof(t_philo));
-		gettimeofday(&philo[i]->time_last_meal, NULL);
-		if (!philo[i])
-			throw_error("malloc failed");
 		philo[i]->philo_num = i + 1;
 		philo[i]->left_fork = i;
 		philo[i]->right_fork = i + 1;
 		philo[i]->meal_count = 0;
 		philo[i]->arg = t_args;
+		pthread_mutex_init(&philo[i]->last_meal_mutex, NULL);
+		pthread_mutex_init(&philo[i]->meal_count_mutex, NULL);
+		gettimeofday(&(philo[i]->time_last_meal), NULL);
 	}
 	philo[i - 1]->right_fork = 0;
 	return (philo);
