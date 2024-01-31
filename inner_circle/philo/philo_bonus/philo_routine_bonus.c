@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:30:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 21:19:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:40:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	start_child(t_args *t_args, t_philo **philo)
 	}
 	if (i < t_args->num_philo && t_args->child_pid[i] == 0)
 	{
-		sem_wait(t_args->process_lock);
+		if (sem_wait(t_args->process_lock) == -1)
+			printf("wait failed");
 		philo_routine(philo[i], t_args);
 	}
 	if (t_args->child_pid[0] != 0)

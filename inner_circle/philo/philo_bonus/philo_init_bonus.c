@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:29:01 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 21:28:03 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 21:36:43 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	init_last_meal_lock(t_philo *philo)
 
 	philo_num = ft_itoa(philo->philo_num);
 	philo->last_meal_lock_str = ft_strcat("last_meal_lock_", philo_num);
-	philo->last_meal_lock = sem_open(philo->last_meal_lock_str, O_CREAT, 0644, 1);
+	philo->last_meal_lock
+		= sem_open(philo->last_meal_lock_str, O_CREAT, 0644, 1);
 	free(philo_num);
 }
 
