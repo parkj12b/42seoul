@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:37:48 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 21:10:35 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/01/31 22:08:35 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	cleanup(t_args *t_args, t_philo **philo)
 	sem_unlink("sem_print_lock");
 	sem_unlink("sem_finish_lock");
 	sem_unlink("process_lock");
+	sem_unlink("half_control_lock");
 	while (++i < t_args->num_philo)
 	{
 		sem_unlink(philo[i]->last_meal_lock_str);
