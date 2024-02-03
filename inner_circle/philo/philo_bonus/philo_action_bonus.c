@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:32:44 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 21:20:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/03 15:38:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ void	printf_dead(int philo_num, t_args *t_args)
 	sem_wait(t_args->print_lock);
 	printf("%zu %d %s\n", get_timestamp(t_args), philo_num, "died");
 }
-

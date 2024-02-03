@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:03:45 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 21:08:40 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/03 15:39:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,3 @@ void	increase_meal_count(t_philo *philo)
 	philo->meal_count++;
 	pthread_mutex_unlock(&philo->meal_count_mutex);
 }
-

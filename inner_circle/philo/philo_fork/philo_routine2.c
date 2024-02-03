@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:00:53 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/30 20:34:45 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/03 15:37:35 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	is_philo_dead(t_philo *philo, t_args *t_args)
 		t_args->finish_flag = 1;
 		pthread_mutex_unlock(&t_args->finish_mutex);
 		printf_dead(philo->philo_num, t_args);
-		printf("died time: %zu\n", diff);
 		return (1);
 	}
 	return (0);
