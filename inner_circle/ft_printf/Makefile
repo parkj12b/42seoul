@@ -20,6 +20,9 @@ all: $(OBJS)
 	make -C ./libft bonus
 	ar rucs $(NAME) $(OBJS)
 
+$(LIBFT):
+	make -C ./libft bonus
+
 bonus: $(BONUS_OBJS)
 	make -C ./libft bonus
 	ar rucs $(NAME) $(BONUS_OBJS)

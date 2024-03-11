@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:50:26 by minsepar          #+#    #+#             */
-/*   Updated: 2023/11/01 12:56:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:35:07 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		parse_format(t_print_dto *dto, const char *format_str);
 void		*append_str(t_print_dto *dto, const char *append_str, ssize_t len);
 
 /* ft_printf_utils.c */
-size_t		ft_strlen(char *s);
+size_t		ft_strlen(const char *str);
 t_print_dto	*dto_init(t_print_dto *dto);
 void		dto_clear(t_print_dto *dto);
 int			on_error(t_print_dto *dto, void *mem1);

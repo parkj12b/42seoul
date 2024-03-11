@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:03:37 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/30 20:26:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:13:29 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ void	free_philo(t_philo **philo, t_args *t_args);
 /* philo_action.c */
 void	printf_dead(int philo_num, t_args *t_args);
 void	printf_philo(int philo_num, char *message, t_args *t_args);
-void	philo_eat(t_philo *philo, t_args *t_args);
-void	philo_sleep(t_philo *philo, t_args *t_args);
+void	increase_meal_count(t_philo *philo);
+void	release_fork(t_philo *philo, t_args *t_args);
+void	take_fork(t_philo *philo, t_args *t_args, int fork_num);
 
 /* philo_init.c */
 int		init_t_args(t_args *t_args, int argc, char **argv);
@@ -68,6 +69,8 @@ t_philo	**init_philo(t_args *t_args);
 int		start_philo(t_philo **philo, t_args *t_args);
 void	*philo_routine(void *arg);
 void	join_thread(t_philo **philo, t_args *t_args);
+void	philo_eat(t_philo *philo, t_args *t_args);
+void	philo_sleep(t_philo *philo, t_args *t_args);
 
 /* philo_routine2.c */
 int		check_dead_philo(t_philo **philo, t_args *t_args);
@@ -79,5 +82,8 @@ int		ft_atoi(const char *str);
 int		ft_usleep(size_t milliseconds);
 size_t	get_current_time(void);
 size_t	get_timestamp(t_args *t_args);
+
+/* philo_routine3.c */
+void	update_last_time_meal(t_philo *philo);
 
 #endif

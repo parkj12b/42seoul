@@ -43,6 +43,7 @@
         "philo_bonus.h": "c",
         "__config": "c",
         "__node_handle": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "_pthread_types.h": "c"
     }
 }

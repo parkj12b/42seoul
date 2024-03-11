@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:38:00 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 21:13:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:01:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	printf_philo(int philo_num, char *message, t_args *t_args);
 void	philo_eat(t_philo *philo, t_args *t_args);
 void	philo_sleep(t_philo *philo, t_args *t_args);
 void	printf_dead(int philo_num, t_args *t_args);
-int		check_finish_flag(t_args *t_args);
 
 /* philo_init_bonus.c */
 void	init_t_args(t_args *t_args);

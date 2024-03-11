@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:37:48 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 22:08:35 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/03 16:41:06 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,17 @@ void	cleanup(t_args *t_args, t_philo **philo)
 	free(t_args->child_pid);
 }
 
+void	check()
+{
+	system("leaks philo_bonus");
+}
+
 int	main(int argc, char **argv)
 {
 	t_args	t_args;
 	t_philo	**philo;
 
+	// atexit(check);
 	if (argc != 5 && argc != 6)
 		throw_error("invalid number of arguments");
 	parse_input(&t_args, argc, argv);
