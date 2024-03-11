@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:55:42 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/30 20:11:50 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/11 23:27:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	init_mutex(t_args *t_args)
 	}
 	pthread_mutex_init(&t_args->print_mutex, NULL);
 	pthread_mutex_init(&t_args->finish_mutex, NULL);
+	pthread_mutex_init(&t_args->finish_count_mutex, NULL);
 	return (0);
 }
 

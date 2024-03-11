@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:03:45 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/03 21:03:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/11 23:09:05 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	printf_dead(int philo_num, t_args *t_args)
 {
-	struct timeval	time;
+	// struct timeval	time;
 
-	gettimeofday(&time, NULL);
+	// gettimeofday(&time, NULL);
 	pthread_mutex_lock(&t_args->print_mutex);
 	printf("%zu %d %s\n", get_timestamp(t_args), philo_num, "died");
 	pthread_mutex_unlock(&t_args->print_mutex);

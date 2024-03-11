@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -O2
+CFLAGS = -g -Wall -Werror -Wextra -fsanitize=thread
 
 NAME = philo
 
@@ -17,6 +17,9 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
+debug:
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+
 clean:
 	rm -rf $(OBJS)
 
@@ -26,6 +29,6 @@ fclean:
 
 re:
 	make fclean
-	make all
+	make debug
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:03:37 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/11 17:13:29 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/11 23:26:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_args
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	finish_mutex;
+	pthread_mutex_t	finish_count_mutex;
 	struct timeval	start_time;
 	int				time_to_die;
 	int				num_philo;

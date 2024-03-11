@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:00:53 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/11 17:18:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/11 23:32:30 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,25 @@ static int	is_philo_dead(t_philo *philo, t_args *t_args)
 	return (0);
 }
 
+int	is_done_must_eat(t_args *t_args)
+{
+	pthread_mutex_lock(&t_args->finish_count_mutex);
+	if (t_args->finished_philo == t_args->num_philo)
+	{
+		pthread_mutex_unlock(&t_args->finish_count_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&t_args->finish_count_mutex);
+	return (0);
+}
+
 int	check_dead_philo(t_philo **philo, t_args *t_args)
 {
 	int	i;
 
-	while (t_args->finish_flag != 1)
+	while (check_finish_flag(t_args) == 0)
 	{
-		if (t_args->num_must_eat >= 0
-			&& t_args->finished_philo == t_args->num_philo)
+		if (t_args->num_must_eat >= 0 && is_done_must_eat(t_args))
 			break ;
 		i = -1;
 		while (++i < t_args->num_philo)
