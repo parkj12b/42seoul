@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:56:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/11 22:03:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:12:26 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	start_philo(t_philo **philo, t_args *t_args)
 			return (ERROR);
 	}
 	check_dead_philo(philo, t_args);
-	// join_thread(philo, t_args);
+	join_thread(philo, t_args);
 	return (0);
 }
 
@@ -31,7 +31,7 @@ static void	philo_routine_helper(t_philo **philo, t_args **t_args, void **arg)
 {
 	*philo = (t_philo *) *arg;
 	*t_args = (*philo)->arg;
-	pthread_detach((*philo)->thread);
+	// pthread_detach((*philo)->thread);
 	if ((*t_args)->num_philo == 1)
 		printf_philo((*philo)->philo_num, "has taken a fork", *t_args);
 }
