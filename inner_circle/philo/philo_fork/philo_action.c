@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:03:45 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/12 14:26:35 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:23:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,17 @@ void	increase_philo_at_barrier(t_args *t_args)
 {
 	pthread_mutex_lock(&t_args->num_philo_at_barrier_mutex);
 	t_args->num_philo_at_barrier++;
-	if (t_args->num_philo_at_barrier == t_args->num_philo / 2)
+	pthread_mutex_lock(&t_args->finish_count_mutex);
+	if (t_args->num_philo_at_barrier
+		== (t_args->num_philo - t_args->finished_philo) / 2
+		|| ((t_args->num_philo - t_args->finished_philo) <= (t_args->num_philo / 2) 
+		&& t_args->num_philo_at_barrier == (t_args->num_philo - t_args->finished_philo)))
 	{
 		pthread_mutex_lock(&t_args->barrier_mutex);
 		t_args->barrier_status = 1;
 		pthread_mutex_unlock(&t_args->barrier_mutex);
 	}
+	pthread_mutex_unlock(&t_args->finish_count_mutex);
 	pthread_mutex_unlock(&t_args->num_philo_at_barrier_mutex);
 }
 
@@ -83,4 +88,5 @@ void	increase_meal_count(t_philo *philo)
 	pthread_mutex_lock(&philo->meal_count_mutex);
 	philo->meal_count++;
 	pthread_mutex_unlock(&philo->meal_count_mutex);
+
 }
