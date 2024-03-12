@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:03:37 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/11 23:26:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:45:53 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_args
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	finish_mutex;
 	pthread_mutex_t	finish_count_mutex;
+	pthread_mutex_t	barrier_mutex;
+	pthread_mutex_t	num_philo_at_barrier_mutex;
 	struct timeval	start_time;
 	int				time_to_die;
 	int				num_philo;
@@ -34,6 +36,8 @@ typedef struct s_args
 	int				finished_philo;
 	int				finish_flag;
 	int				*fork_status;
+	int				barrier_status;
+	int				num_philo_at_barrier;
 }	t_args;
 
 typedef struct s_philo
@@ -86,5 +90,8 @@ size_t	get_timestamp(t_args *t_args);
 
 /* philo_routine3.c */
 void	update_last_time_meal(t_philo *philo);
+
+void	increase_philo_at_barrier(t_args *t_args);
+
 
 #endif

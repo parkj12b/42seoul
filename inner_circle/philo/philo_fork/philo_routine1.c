@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:56:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/12 00:13:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:30:43 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,50 @@ void	join_thread(t_philo **philo, t_args *t_args)
 	}
 }
 
+int	check_barrier_status(t_args *t_args)
+{
+	pthread_mutex_lock(&t_args->barrier_mutex);
+	if (t_args->barrier_status == 0)
+	{
+		pthread_mutex_unlock(&t_args->barrier_mutex);
+		return (0);
+	}
+	pthread_mutex_unlock(&t_args->barrier_mutex);
+	return (1);
+}
+
+void	decrease_philo_at_barrier(t_args *t_args)
+{
+	pthread_mutex_lock(&t_args->num_philo_at_barrier_mutex);
+	t_args->num_philo_at_barrier--;
+	if (t_args->num_philo_at_barrier == 0)
+	{
+		pthread_mutex_lock(&t_args->barrier_mutex);
+		t_args->barrier_status = 0;
+		pthread_mutex_unlock(&t_args->barrier_mutex);
+	}
+	pthread_mutex_unlock(&t_args->num_philo_at_barrier_mutex);
+}
+
+void	wait_barrier(t_args *t_args)
+{
+	increase_philo_at_barrier(t_args);
+	while (1)
+	{
+		if (check_barrier_status(t_args) == 1)
+		{
+			decrease_philo_at_barrier(t_args);
+			break ;
+		}
+		usleep(100);
+	}
+}
+
 void	philo_eat(t_philo *philo, t_args *t_args)
 {
 	take_fork(philo, t_args, philo->left_fork);
 	take_fork(philo, t_args, philo->right_fork);
+	wait_barrier(t_args);
 	printf_philo(philo->philo_num, "is eating", t_args);
 	update_last_time_meal(philo);
 	increase_meal_count(philo);

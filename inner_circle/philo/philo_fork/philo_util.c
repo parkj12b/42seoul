@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:53:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/01/31 16:08:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 01:51:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,33 @@ int	ft_atoi(const char *str)
 	return ((int)(num * sign));
 }
 
+size_t	get_current_time_usec()
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000000 + time.tv_usec);
+}
+
 int	ft_usleep(size_t milliseconds)
 {
+	size_t	elapsed;
 	size_t	start;
+	size_t	remaining;
+	size_t	usec;
 
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
-		usleep(100);
+	start = get_current_time_usec();
+	elapsed = get_current_time_usec() - start;
+	usec = milliseconds * 1000;
+	remaining = usec - elapsed;
+	while (elapsed < usec)
+	{
+		if (remaining > 1000)
+			usleep(remaining / 2);
+		elapsed = get_current_time_usec() - start;
+		usec = milliseconds * 1000;
+		remaining = usec - elapsed;
+	}
 	return (0);
 }
 

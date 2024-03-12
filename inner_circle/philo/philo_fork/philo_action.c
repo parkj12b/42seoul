@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:03:45 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/11 23:09:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:26:35 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	printf_dead(int philo_num, t_args *t_args)
 {
-	// struct timeval	time;
-
-	// gettimeofday(&time, NULL);
 	pthread_mutex_lock(&t_args->print_mutex);
 	printf("%zu %d %s\n", get_timestamp(t_args), philo_num, "died");
 	pthread_mutex_unlock(&t_args->print_mutex);
@@ -35,6 +32,19 @@ void	printf_philo(int philo_num, char *message, t_args *t_args)
 	gettimeofday(&time, NULL);
 	printf("%zu %d %s\n", get_timestamp(t_args), philo_num, message);
 	pthread_mutex_unlock(&t_args->print_mutex);
+}
+
+void	increase_philo_at_barrier(t_args *t_args)
+{
+	pthread_mutex_lock(&t_args->num_philo_at_barrier_mutex);
+	t_args->num_philo_at_barrier++;
+	if (t_args->num_philo_at_barrier == t_args->num_philo / 2)
+	{
+		pthread_mutex_lock(&t_args->barrier_mutex);
+		t_args->barrier_status = 1;
+		pthread_mutex_unlock(&t_args->barrier_mutex);
+	}
+	pthread_mutex_unlock(&t_args->num_philo_at_barrier_mutex);
 }
 
 void	take_fork(t_philo *philo, t_args *t_args, int fork_num)

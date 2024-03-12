@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:55:42 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/11 23:27:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:24:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	init_t_args(t_args *t_args, int argc, char **argv)
 	t_args->finished_philo = 0;
 	t_args->finish_flag = 0;
 	t_args->num_must_eat = -1;
+	t_args->num_philo_at_barrier = 0;
+	t_args->barrier_status = 0;
 	if (argc == 6)
 		t_args->num_must_eat = ft_atoi(argv[5]);
 	if (t_args->num_philo <= 0 || t_args->time_to_die < 0
@@ -63,6 +65,8 @@ int	init_mutex(t_args *t_args)
 	pthread_mutex_init(&t_args->print_mutex, NULL);
 	pthread_mutex_init(&t_args->finish_mutex, NULL);
 	pthread_mutex_init(&t_args->finish_count_mutex, NULL);
+	pthread_mutex_init(&t_args->barrier_mutex, NULL);
+	pthread_mutex_init(&t_args->num_philo_at_barrier_mutex, NULL);
 	return (0);
 }
 
