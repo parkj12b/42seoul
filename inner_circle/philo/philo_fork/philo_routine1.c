@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:56:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 20:23:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:13:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,11 @@ void	*philo_routine(void *arg)
 	t_args	*t_args;
 
 	philo_routine_helper(&philo, &t_args, &arg);
-	check_philo_finish(philo, t_args);
+	if (check_philo_finish(philo, t_args) == TRUE)
+		return (SUCCESS);
 	if (t_args->num_philo == 1)
-		return (0);
-	while (check_finish_flag(t_args) == 0)
+		return (SUCCESS);
+	while (check_finish_flag(t_args) == FALSE)
 	{
 		if (philo_eat(philo, t_args) == ERROR)
 		{
@@ -128,7 +129,7 @@ int	wait_barrier(t_philo *philo, t_args *t_args)
 	}
 	pthread_mutex_unlock(&t_args->fork[philo->left_fork]);
 	pthread_mutex_unlock(&t_args->fork[philo->right_fork]);
-	return (1);
+	return (ERROR);
 }
 
 int	philo_eat(t_philo *philo, t_args *t_args)
