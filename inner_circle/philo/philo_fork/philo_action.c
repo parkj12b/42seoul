@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:03:45 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/12 16:23:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:59:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ void	increase_philo_at_barrier(t_args *t_args)
 	t_args->num_philo_at_barrier++;
 	pthread_mutex_lock(&t_args->finish_count_mutex);
 	if (t_args->num_philo_at_barrier
-		== (t_args->num_philo - t_args->finished_philo) / 2
-		|| ((t_args->num_philo - t_args->finished_philo) <= (t_args->num_philo / 2) 
-		&& t_args->num_philo_at_barrier == (t_args->num_philo - t_args->finished_philo)))
+		== (t_args->num_philo) / 2
+		|| t_args->num_philo_at_barrier == (t_args->num_philo - t_args->finished_philo))
 	{
 		pthread_mutex_lock(&t_args->barrier_mutex);
 		t_args->barrier_status = 1;
@@ -52,25 +51,27 @@ void	increase_philo_at_barrier(t_args *t_args)
 	pthread_mutex_unlock(&t_args->num_philo_at_barrier_mutex);
 }
 
-void	take_fork(t_philo *philo, t_args *t_args, int fork_num)
+int	take_fork(t_philo *philo, t_args *t_args, int fork_num)
 {
-	while (1)
+	while (check_finish_flag(t_args) == 0)
 	{
 		pthread_mutex_lock(&t_args->fork[fork_num]);
 		if (t_args->fork_status[fork_num] == 0 && philo->right_fork == fork_num)
 		{
 			printf_philo(philo->philo_num, "has taken a fork", t_args);
-			return ;
+			return (0);
 		}
 		else if (t_args->fork_status[fork_num] == 1
 			&& philo->left_fork == fork_num)
 		{
 			printf_philo(philo->philo_num, "has taken a fork", t_args);
-			return ;
+			return (0);
 		}
 		pthread_mutex_unlock(&t_args->fork[fork_num]);
 		usleep(100);
 	}
+	pthread_mutex_unlock(&t_args->fork[fork_num]);
+	return (1);
 }
 
 void	release_fork(t_philo *philo, t_args *t_args)

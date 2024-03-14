@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:56:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/12 14:30:43 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:23:42 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,17 @@ int	start_philo(t_philo **philo, t_args *t_args)
 	while (++i < t_args->num_philo)
 	{
 		if (pthread_create(&(philo[i]->thread), NULL, philo_routine, philo[i]))
-			return (ERROR);
+			return (EFNFAIL);
 	}
 	check_dead_philo(philo, t_args);
 	join_thread(philo, t_args);
-	return (0);
+	return (SUCCESS);
 }
 
 static void	philo_routine_helper(t_philo **philo, t_args **t_args, void **arg)
 {
 	*philo = (t_philo *) *arg;
 	*t_args = (*philo)->arg;
-	// pthread_detach((*philo)->thread);
-	if ((*t_args)->num_philo == 1)
-		printf_philo((*philo)->philo_num, "has taken a fork", *t_args);
 }
 
 void	increment_finished_philo(t_args *t_args)
@@ -43,24 +40,40 @@ void	increment_finished_philo(t_args *t_args)
 	pthread_mutex_unlock(&t_args->finish_count_mutex);
 }
 
+int	check_philo_finish(t_philo *philo, t_args *t_args)
+{
+	pthread_mutex_lock(&philo->meal_count_mutex);
+	if (t_args->num_must_eat >= 0
+		&& philo->meal_count == t_args->num_must_eat)
+	{
+		pthread_mutex_unlock(&philo->meal_count_mutex);
+		increment_finished_philo(t_args);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->meal_count_mutex);
+	if (t_args->num_philo == 1)
+		printf_philo(philo->philo_num, "has taken a fork", t_args);
+	return (0);
+}
+
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 	t_args	*t_args;
 
 	philo_routine_helper(&philo, &t_args, &arg);
-	while (t_args->num_philo > 1 && check_finish_flag(t_args) == 0)
+	check_philo_finish(philo, t_args);
+	if (t_args->num_philo == 1)
+		return (0);
+	while (check_finish_flag(t_args) == 0)
 	{
-		philo_eat(philo, t_args);
-		pthread_mutex_lock(&philo->meal_count_mutex);
-		if (t_args->num_must_eat >= 0
-			&& philo->meal_count == t_args->num_must_eat)
+		if (philo_eat(philo, t_args) == ERROR)
 		{
-			pthread_mutex_unlock(&philo->meal_count_mutex);
-			increment_finished_philo(t_args);
-			break ;
+			t_args->error_num = ERROR;
+			return (NULL);
 		}
-		pthread_mutex_unlock(&philo->meal_count_mutex);
+		if (check_philo_finish(philo, t_args) == TRUE)
+			break ;
 		philo_sleep(philo, t_args);
 		printf_philo(philo->philo_num, "is thinking", t_args);
 	}
@@ -73,9 +86,7 @@ void	join_thread(t_philo **philo, t_args *t_args)
 
 	i = -1;
 	while (++i < t_args->num_philo)
-	{
 		pthread_join(philo[i]->thread, NULL);
-	}
 }
 
 int	check_barrier_status(t_args *t_args)
@@ -103,30 +114,37 @@ void	decrease_philo_at_barrier(t_args *t_args)
 	pthread_mutex_unlock(&t_args->num_philo_at_barrier_mutex);
 }
 
-void	wait_barrier(t_args *t_args)
+int	wait_barrier(t_philo *philo, t_args *t_args)
 {
 	increase_philo_at_barrier(t_args);
-	while (1)
+	while (check_finish_flag(t_args) == 0)
 	{
 		if (check_barrier_status(t_args) == 1)
 		{
 			decrease_philo_at_barrier(t_args);
-			break ;
+			return (0);
 		}
 		usleep(100);
 	}
+	pthread_mutex_unlock(&t_args->fork[philo->left_fork]);
+	pthread_mutex_unlock(&t_args->fork[philo->right_fork]);
+	return (1);
 }
 
-void	philo_eat(t_philo *philo, t_args *t_args)
+int	philo_eat(t_philo *philo, t_args *t_args)
 {
-	take_fork(philo, t_args, philo->left_fork);
-	take_fork(philo, t_args, philo->right_fork);
-	wait_barrier(t_args);
+	if (take_fork(philo, t_args, philo->left_fork) == ERROR)
+		return (ERROR);
+	if (take_fork(philo, t_args, philo->right_fork) == ERROR)
+		return (ERROR);
+	if (wait_barrier(philo, t_args) == ERROR)
+		return (ERROR);
 	printf_philo(philo->philo_num, "is eating", t_args);
 	update_last_time_meal(philo);
 	increase_meal_count(philo);
 	ft_usleep(t_args->time_to_eat);
 	release_fork(philo, t_args);
+	return (SUCCESS);
 }
 
 
