@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:58:04 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 18:55:35 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:38:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	main(int argc, char **argv)
 {
 	t_args	t_args;
 	t_philo	**philo;
-	int		error_num;
 
 	if (argc != 5 && argc != 6)
 		return (print_error(ENUARG));
