@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:55:42 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 21:35:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:45:21 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ int	init_t_args(t_args *args, int argc, char **argv)
 	args->time_to_die = ft_atoi(argv[2]);
 	args->time_to_eat = ft_atoi(argv[3]);
 	args->time_to_sleep = ft_atoi(argv[4]);
+	printf("num_philo: %d\n", args->num_philo);
+	printf("time_to_die: %d\n", args->time_to_die);
+	printf("time_to_eat: %d\n", args->time_to_eat);
+	printf("time_to_sleep: %d\n", args->time_to_sleep);
 	args->num_must_eat = -1;
 	if (argc == 6)
 		args->num_must_eat = ft_atoi(argv[5]);
