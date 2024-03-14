@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:55:42 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 19:57:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:47:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_fork_status(t_args *t_args)
 		t_args->error_num = EFNFAIL;
 		return (EFNFAIL);
 	}
-	memset(t_args->fork_status, 0, sizeof(sizeof(int) * t_args->num_philo));
+	memset(t_args->fork_status, 0, sizeof(int) * t_args->num_philo);
 	i = -1;
 	while (++i < t_args->num_philo)
 	{
