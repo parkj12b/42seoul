@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:56:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 21:13:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:39:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ void	*philo_routine(void *arg)
 	while (check_finish_flag(t_args) == FALSE)
 	{
 		if (philo_eat(philo, t_args) == ERROR)
-		{
-			t_args->error_num = ERROR;
 			return (NULL);
-		}
 		if (check_philo_finish(philo, t_args) == TRUE)
 			break ;
 		philo_sleep(philo, t_args);

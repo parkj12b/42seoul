@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 16:03:37 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 20:12:41 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:35:16 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_args
 	pthread_mutex_t	finish_mutex;
 	pthread_mutex_t	finish_count_mutex;
 	pthread_mutex_t	barrier_mutex;
+	pthread_mutex_t	error_num_mutex;
 	pthread_mutex_t	num_philo_at_barrier_mutex;
 	struct timeval	start_time;
 	int				error_num;
