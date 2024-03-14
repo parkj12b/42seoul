@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:56:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 21:39:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:50:35 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	start_philo(t_philo **philo, t_args *t_args)
 	i = -1;
 	while (++i < t_args->num_philo)
 	{
+		printf("created: %d\n", i);
 		if (pthread_create(&(philo[i]->thread), NULL, philo_routine, philo[i]))
 			return (EFNFAIL);
 	}
