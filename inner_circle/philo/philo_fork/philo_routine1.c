@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:56:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 22:38:52 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:43:48 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	wait_barrier(t_philo *philo, t_args *t_args)
 			decrease_philo_at_barrier(t_args);
 			return (0);
 		}
-		usleep(t_args->time_to_die / 2);
+		usleep(t_args->time_to_eat / 2);
 	}
 	pthread_mutex_unlock(&t_args->fork[philo->left_fork]);
 	pthread_mutex_unlock(&t_args->fork[philo->right_fork]);

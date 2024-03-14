@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -g -Wall -Werror -Wextra -fsanitize=address -march=native -O2
+CFLAGS = -g -Wall -Werror -Wextra -fsanitize=address -march=native -O2 
 
 NAME = philo
 
