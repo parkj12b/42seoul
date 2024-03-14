@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:03:45 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/12 17:59:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:53:13 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	take_fork(t_philo *philo, t_args *t_args, int fork_num)
 		pthread_mutex_unlock(&t_args->fork[fork_num]);
 		usleep(100);
 	}
-	pthread_mutex_unlock(&t_args->fork[fork_num]);
 	return (1);
 }
 
