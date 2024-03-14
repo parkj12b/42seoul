@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 13:58:04 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/14 20:38:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:39:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(int argc, char **argv)
 		free_mutex(&t_args);
 		return (print_error(t_args.error_num));
 	}
-	error_num = start_philo(philo, &t_args);
+	t_args.error_num = start_philo(philo, &t_args);
 	free_philo_list(philo, &t_args);
 	free_mutex(&t_args);
 	if (t_args.error_num != 0)
