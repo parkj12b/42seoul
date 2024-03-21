@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:01:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 20:19:09 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:15:17 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ int	parse_input(int argc, char **argv, t_common *common)
 	return (SUCCESS);
 }
 
+void	cleanup(t_common *common, t_philo *philo_list)
+{
+	free(common->fork_status);
+	pthread_mutex_destroy(&common->finish_flag_mutex);
+	pthread_mutex_destroy(&common->print_mutex);
+	pthread_mutex_destroy(&common->philo_at_barrier_mutex);
+	pthread_mutex_destroy(&common->barrier_flag_mutex);
+	pthread_mutex_destroy(&common->finished_philo_mutex);
+	free(common->fork_status_mutex);
+	free(philo_list);
+}
+
 int	main(int argc, char **argv)
 {
 	t_common	common;
@@ -66,4 +78,5 @@ int	main(int argc, char **argv)
 		return (common.status_code);
 	}
 	start_routine(&common, philo_list);
+	cleanup(&common, philo_list);
 }
