@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:56:55 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 16:32:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:47:30 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	init_t_common(t_common *common)
 	}
 	i = -1;
 	while (++i < common->num_of_philo)
+	{
 		common->fork_status[i] = i % 2;
+		pthread_mutex_init(&common->fork_status_mutex[i], NULL);
+	}
 	init_t_mutex(common);
 	return (SUCCESS);
 }
