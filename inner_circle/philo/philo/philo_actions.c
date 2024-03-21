@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 20:56:06 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 16:52:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:43:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_dead(t_common *common, t_philo *philo)
 	size_t			time_diff;
 
 	time_diff = get_cur_time_us() - philo->last_eat_time;
-	if (time_diff >= common->time_to_die * 1000)
+	if (time_diff >= common->time_to_die * 1000L)
 	{
 		set_finish_flag(common);
 		print_philo_dead(common, philo);
