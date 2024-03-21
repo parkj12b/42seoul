@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:57:46 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 16:52:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/21 21:21:45 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <string.h>
 
 # include "error.h"
 
@@ -33,8 +34,13 @@ typedef struct s_common
 {
 	pthread_mutex_t	finish_flag_mutex;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	philo_at_barrier_mutex;
+	pthread_mutex_t	barrier_flag_mutex;
+	pthread_mutex_t	finished_philo_mutex;
 	pthread_mutex_t	*fork_status_mutex;
 	size_t			start_time;
+	int				philo_at_barrier;
+	int				barrier_flag;
 	int				status_code;
 	int				finish_flag;
 	int				num_of_philo;
@@ -42,6 +48,7 @@ typedef struct s_common
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_must_eat;
+	int				finished_philo;
 	int				*fork_status;
 }	t_common;
 
@@ -78,9 +85,8 @@ int		is_finished(t_common *common);
 /* philo_actions2.c */
 int		get_fork_status(t_common *common, int fork_num);
 void	update_last_time_eat(t_common *common, t_philo *philo);
-void	set_fork_busy(t_common *common, int fork_num);
 void	release_fork(t_common *common, int fork_num);
-
+int		wait_at_barrier(t_common *common, t_philo *philo);
 /* philo_routine_helper.c */
 int		is_in_action(size_t start_time, size_t duration_ms);
 

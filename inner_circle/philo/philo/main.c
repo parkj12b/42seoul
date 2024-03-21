@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:01:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 17:28:30 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/21 20:19:09 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	is_input_valid(t_common *common)
 
 int	parse_input(int argc, char **argv, t_common *common)
 {
+	memset(common, 0, sizeof(t_common));
 	common->num_must_eat = -1;
 	if (argc != 5 && argc != 6)
 	{
@@ -54,9 +55,9 @@ int	main(int argc, char **argv)
 	t_common	common;
 	t_philo		*philo_list;
 
-	if (init_t_common(&common) != SUCCESS)
-		return (common.status_code);
 	if (parse_input(argc, argv, &common) != SUCCESS)
+		return (common.status_code);
+	if (init_t_common(&common) != SUCCESS)
 		return (common.status_code);
 	philo_list = init_philo_list(&common);
 	if (philo_list == NULL)

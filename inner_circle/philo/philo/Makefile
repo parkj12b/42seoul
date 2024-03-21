@@ -1,6 +1,6 @@
 CC = cc
 
-CCFLAGS = -Wall -Werror -Wextra
+CCFLAGS = -Wall -Werror -Wextra -g -O0
 
 NAME = philo
 
@@ -16,7 +16,7 @@ all: $(NAME)
 	$(CC) -c $(CCFLAGS) $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CCFLAGS) $(SRCS) -pg $(LIBFT) -o $(NAME)
+	$(CC) $(CCFLAGS) $(SRCS) -o $(NAME)
 
 re: fclean all
 
