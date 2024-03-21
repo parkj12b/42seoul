@@ -13,10 +13,10 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 %.o: %.c
-	$(CC) -c $(FLAGS) $< -o $@
+	$(CC) -c $(CCFLAGS) $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CCFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CCFLAGS) $(SRCS) -pg $(LIBFT) -o $(NAME)
 
 re: fclean all
 
