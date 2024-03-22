@@ -44,6 +44,7 @@
         "__config": "c",
         "__node_handle": "c",
         "pthread.h": "c",
-        "_pthread_types.h": "c"
+        "_pthread_types.h": "c",
+        "philo.h": "c"
     }
 }
