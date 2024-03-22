@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:56:55 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 22:13:21 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:05:34 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	init_t_common(t_common *common)
 {
 	int	i;
 
-	// printf("num_of_philo: %d\n", common->num_of_philo);
 	common->fork_status = safe_malloc(common,
 			sizeof(int) * common->num_of_philo);
 	common->fork_status_mutex = safe_malloc(common,

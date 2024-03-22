@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 20:56:06 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 21:58:24 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:05:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ static int	try_take_fork(t_common *common, t_philo *philo, int fork_num)
 	if (philo->left_fork == fork_num && common->fork_status[fork_num] % 2 == 0)
 	{
 		common->fork_status[fork_num] += FORK_BUSY;
-		printf_philo(common, philo->num_philo, "has taken a fork");
 		return (SUCCESS);
 	}
 	else if (philo->right_fork == fork_num && common->fork_status[fork_num] % 2 == 1)
 	{
 		common->fork_status[fork_num] += FORK_BUSY;
-		printf_philo(common, philo->num_philo, "has taken a fork");
 		return (SUCCESS);
 	}
 	return (FAIL);

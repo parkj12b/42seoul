@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 22:26:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 21:25:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:07:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ void	update_last_time_eat(t_common *common, t_philo *philo)
 	printf_philo(common, philo->num_philo, "is eating");
 	if (common->num_must_eat != -1)
 		philo->num_eat++;
+	if (common->num_must_eat == philo->num_eat)
+	{
+		pthread_mutex_lock(&common->finished_philo_mutex);
+		common->finished_philo++;
+		pthread_mutex_unlock(&common->finished_philo_mutex);
+	}
 }
 
 void	release_fork(t_common *common, int fork_num)
@@ -48,10 +54,11 @@ int	increase_philo_at_barrier(t_common *common)
 		{
 			pthread_mutex_lock(&common->philo_at_barrier_mutex);
 			common->philo_at_barrier++;
-			// printf("philo_at_barrier increase [%d]\n", common->philo_at_barrier);
 			pthread_mutex_lock(&common->finished_philo_mutex);
 			if (common->philo_at_barrier
-				== (common->num_of_philo - common->finished_philo) / 2)
+				== (common->num_of_philo / 2)
+				|| (common->philo_at_barrier
+					== common->num_of_philo - common->finished_philo))
 				common->barrier_flag = TRUE;
 			pthread_mutex_unlock(&common->finished_philo_mutex);
 			pthread_mutex_unlock(&common->philo_at_barrier_mutex);
@@ -59,17 +66,15 @@ int	increase_philo_at_barrier(t_common *common)
 			return (SUCCESS);
 		}
 		pthread_mutex_unlock(&common->barrier_flag_mutex);
-		sleep(100);
+		usleep(100);
 	}
 	return (FAIL);
 }
 
 int	decrease_philo_at_barrier(t_common *common)
 {
-	// printf("decrease\n");
 	pthread_mutex_lock(&common->philo_at_barrier_mutex);
 	common->philo_at_barrier--;
-	// printf("philo_at_barrier [%d]\n", common->philo_at_barrier);
 	if (common->philo_at_barrier == 0)
 		common->barrier_flag = FALSE;
 	pthread_mutex_unlock(&common->philo_at_barrier_mutex);
@@ -84,7 +89,6 @@ int	wait_at_barrier(t_common *common, t_philo *philo)
 	while (is_finished(common) == FALSE)
 	{
 		pthread_mutex_lock(&common->barrier_flag_mutex);
-		// printf("philo_num : [%d]\n", philo->num_philo);
 		if (common->barrier_flag == TRUE)
 		{
 			decrease_philo_at_barrier(common);
