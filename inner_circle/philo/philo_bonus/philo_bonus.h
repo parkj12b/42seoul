@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:46:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 14:54:50 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:55:52 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 /* init_free_bonus.c */
 void	init_t_common(t_common *common);
 void	init_t_philo(t_common *common, t_philo *philo, int philo_num);
-void	exit_cleanup(void);
+void	exit_cleanup(t_common *common);
 
 /* itoa_bonus.c */
 char	*ft_itoa(int n);
