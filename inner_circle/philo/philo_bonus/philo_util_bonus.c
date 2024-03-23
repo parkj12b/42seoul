@@ -6,11 +6,33 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:57:08 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 16:03:35 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 01:32:39 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	print_dead(t_common *common, int philo_num, char *message)
+{
+	t_parse_str	*parse_str;
+	char		*temp;
+
+	parse_str = &common->parse_str;
+	parse_str->cursor = 0;
+	parse_str->str[0] = 0;
+	temp = ft_itoa(get_timestamp_ms(common));
+	append_str(parse_str, temp);
+	append_char(parse_str, ' ');
+	free(temp);
+	temp = ft_itoa(philo_num);
+	append_str(parse_str, temp);
+	append_char(parse_str, ' ');
+	free(temp);
+	append_str(parse_str, message);
+	append_char(parse_str, '\n');
+	write(1, parse_str->str, parse_str->cursor);
+	// printf("%zu %d %s\n", get_timestamp_ms(common), philo_num, message);
+}
 
 int	is_dead(t_common *common, t_philo *philo)
 {
@@ -23,7 +45,8 @@ int	is_dead(t_common *common, t_philo *philo)
 	if (time_diff >= time_to_die_usec)
 	{
 		sem_wait(common->print_lock);
-		printf("%zu %d died\n", get_timestamp_ms(common), philo->philo_num);
+		print_dead(common, philo->philo_num, "died");
+		// print_dead("%zu %d died\n", get_timestamp_ms(common), philo->philo_num);
 		sem_post(philo->last_time_lock);
 		return (TRUE);
 	}

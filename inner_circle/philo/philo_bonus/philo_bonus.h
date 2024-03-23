@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:46:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 16:50:56 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 00:56:00 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,28 @@
 # define ENOARG 2
 # define INVARG 3
 
+typedef struct s_parse_str
+{
+	char	*str;
+	size_t	malloc_size;
+	size_t	cursor;
+}	t_parse_str;
+
 typedef struct s_common /* shared data struct */
 {
-	size_t	start_time;
-	sem_t	*fork;
-	sem_t	*print_lock;
-	sem_t	*fork_lock;
-	pid_t	*child_pid;
-	char	*last_meal_lock_name;
-	char	*num_eat_lock_name;
-	int		num_of_philo;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		num_must_eat;
+	t_parse_str	parse_str;
+	size_t		start_time;
+	sem_t		*fork;
+	sem_t		*print_lock;
+	pid_t		*child_pid;
+	char		*last_meal_lock_name;
+	char		*num_eat_lock_name;
+	char		*fork_lock_name;
+	int			num_of_philo;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			num_must_eat;
 }	t_common;
 
 typedef struct s_philo /* represent each philo's data */
@@ -60,8 +68,10 @@ typedef struct s_philo /* represent each philo's data */
 	size_t		last_eat_time;
 	sem_t		*last_time_lock;
 	sem_t		*num_eat_lock;
+	sem_t		*fork_lock;
 	char		*last_time_lock_str;
 	char		*num_eat_lock_str;
+	char		*fork_lock_str;
 	int			num_eat;
 	int			philo_num;
 }	t_philo;
@@ -80,11 +90,13 @@ void	printf_philo(t_common *common, int philo_num, char *message);
 size_t	ft_strlen(const char *s);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+char	*ft_strdup(const char *s1);
 
 /* init_free_bonus.c */
 void	init_t_common(t_common *common);
 void	init_t_philo(t_common *common, t_philo *philo, int philo_num);
 void	exit_cleanup(t_common *common);
+void	init_self_lock(t_common *common, t_philo *philo, char *philo_num_str);
 
 /* itoa_bonus.c */
 char	*ft_itoa(int n);
@@ -101,5 +113,13 @@ int		is_dead(t_common *common, t_philo *philo);
 
 /* philo_eat_bonus.c */
 void	start_eat_routine(t_common *common, t_philo *philo);
+void	take_fork(t_common *common, t_philo *philo);
+
+/* waiter_bonus.c */
+void	*serve_forks(void *arg);
+
+/* str_parser_bonus.c */
+void	append_char(t_parse_str *parse_str, char c);
+void	append_str(t_parse_str *parse_str, char *str);
 
 #endif

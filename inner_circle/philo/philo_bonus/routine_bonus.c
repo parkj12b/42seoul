@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:32:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 16:18:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 01:27:44 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	start_routine(t_common *common, t_philo *philo)
 			break ;
 		}
 		sem_post(philo->last_time_lock);
-		usleep(100);
+		usleep(500);
 	}
 	exit(0);
 }

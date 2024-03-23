@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 23:17:47 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 16:25:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 00:50:07 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,17 @@ static void	update_last_time_eat(t_common *common, t_philo *philo)
 {
 	sem_wait(philo->last_time_lock);
 	philo->last_eat_time = get_cur_time_us();
+	printf_philo(common, philo->philo_num, "has taken a fork");
+	printf_philo(common, philo->philo_num, "has taken a fork");
 	printf_philo(common, philo->philo_num, "is eating");
 	sem_post(philo->last_time_lock);
 }
 
-static void	take_fork(t_common *common, t_philo *philo)
+void	take_fork(t_common *common, t_philo *philo)
 {
-	sem_wait(common->fork_lock);
+	(void) philo;
 	sem_wait(common->fork);
-	printf_philo(common, philo->philo_num, "has taken a fork");
 	sem_wait(common->fork);
-	printf_philo(common, philo->philo_num, "has taken a fork");
-	sem_post(common->fork_lock);
 }
 
 static void	release_fork(t_common *common)
@@ -38,7 +37,7 @@ static void	release_fork(t_common *common)
 
 void	start_eat_routine(t_common *common, t_philo *philo)
 {
-	take_fork(common, philo);
+	sem_wait(philo->fork_lock);
 	update_last_time_eat(common, philo);
 	ft_msleep(common->time_to_eat);
 	release_fork(common);

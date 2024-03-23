@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:19:15 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/22 23:58:27 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:20:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,22 @@ void	ft_putstr_fd(char *s, int fd)
 	if (s == NULL)
 		return ;
 	write(fd, s, ft_strlen(s));
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*s2;
+	int		i;
+
+	i = 0;
+	s2 = (char *)malloc(ft_strlen(s1) + 1);
+	if (!s2)
+		return (0);
+	while (s1[i])
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = 0;
+	return (s2);
 }

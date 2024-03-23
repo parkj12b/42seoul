@@ -6,17 +6,17 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:00:38 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 16:25:35 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:10:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static int	is_input_valid(t_common *common)
+static int	is_input_valid(t_common *common, int argc)
 {
 	if (common->num_of_philo < 1 || common->time_to_die < 0
 		|| common->time_to_eat < 0 || common->time_to_sleep < 0
-		|| (common->num_must_eat != -1 && common->num_must_eat < 0))
+		|| (argc == 6 && common->num_must_eat < 0))
 		return (FALSE);
 	return (TRUE);
 }
@@ -36,7 +36,7 @@ static int	parse_input(int argc, char **argv, t_common *common)
 		|| ft_atoi_num_only(argv[4], &common->time_to_sleep) != SUCCESS
 		|| (argc == 6 && ft_atoi_num_only(argv[5],
 				&common->num_must_eat) != SUCCESS)
-		|| is_input_valid(common) == FALSE)
+		|| is_input_valid(common, argc) == FALSE)
 	{
 		print_error(INVARG);
 		exit (255 + INVARG);
@@ -53,6 +53,7 @@ int	print_error(int error_num)
 	error_msg[2] = "Invalid number of arguments";
 	error_msg[3] = "Invalid argument";
 	ft_putstr_fd(error_msg[error_num], 2);
+	ft_putstr_fd("\n", 2);
 	exit (ERROR);
 }
 
