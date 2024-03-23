@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:13:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 15:04:48 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:55:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ void	init_t_philo(t_common *common, t_philo *philo, int philo_num)
 	philo->num_eat = 0;
 }
 
-void	exit_cleanup(void)
+void	exit_cleanup(t_common *common)
 {
+	free(common->child_pid);
 	sem_unlink("print_lock");
 	sem_unlink("fork");
 	sem_unlink("fork_lock");

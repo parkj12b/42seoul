@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:00:38 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/22 23:51:56 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:54:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int	main(int argc, char **argv)
 	parse_input(argc, argv, &common);
 	init_t_common(&common);
 	fork_philo(&common);
-	exit_cleanup();
+	exit_cleanup(&common);
 }
 
