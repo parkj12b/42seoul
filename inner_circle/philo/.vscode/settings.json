@@ -11,6 +11,12 @@
         "string_view": "c",
         "unordered_map": "c",
         "utility": "c",
-        "vector": "c"
+        "vector": "c",
+        "philo_bonus.h": "c",
+        "wait.h": "c",
+        "pthread.h": "c",
+        "semaphore.h": "c",
+        "signal.h": "c",
+        "__threading_support": "c"
     }
 }

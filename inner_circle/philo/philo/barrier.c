@@ -1,51 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_actions2.c                                   :+:      :+:    :+:   */
+/*   barrier.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 22:26:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/22 00:07:56 by minsepar         ###   ########.fr       */
+/*   Created: 2024/03/22 13:59:56 by minsepar          #+#    #+#             */
+/*   Updated: 2024/03/22 15:19:52 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	get_fork_status(t_common *common, int fork_num)
-{
-	int	status;
-
-	pthread_mutex_lock(&common->fork_status_mutex[fork_num]);
-	status = common->fork_status[fork_num];
-	pthread_mutex_unlock(&common->fork_status_mutex[fork_num]);
-	return (status);
-}
-
-void	update_last_time_eat(t_common *common, t_philo *philo)
-{
-	philo->last_eat_time = get_cur_time_us();
-	printf_philo(common, philo->num_philo, "is eating");
-	if (common->num_must_eat != -1)
-		philo->num_eat++;
-	if (common->num_must_eat == philo->num_eat)
-	{
-		pthread_mutex_lock(&common->finished_philo_mutex);
-		common->finished_philo++;
-		pthread_mutex_unlock(&common->finished_philo_mutex);
-	}
-}
-
-void	release_fork(t_common *common, int fork_num)
-{
-	pthread_mutex_lock(&common->fork_status_mutex[fork_num]);
-	common->fork_status[fork_num] -= FORK_BUSY;
-	common->fork_status[fork_num]++;
-	common->fork_status[fork_num] %= 2;
-	pthread_mutex_unlock(&common->fork_status_mutex[fork_num]);
-}
-
-int	increase_philo_at_barrier(t_common *common)
+static int	increase_philo_at_barrier(t_common *common)
 {
 	while (is_finished(common) == FALSE)
 	{
@@ -66,12 +33,12 @@ int	increase_philo_at_barrier(t_common *common)
 			return (SUCCESS);
 		}
 		pthread_mutex_unlock(&common->barrier_flag_mutex);
-		usleep(100);
+		usleep(common->num_of_philo);
 	}
 	return (FAIL);
 }
 
-int	decrease_philo_at_barrier(t_common *common)
+static int	decrease_philo_at_barrier(t_common *common)
 {
 	pthread_mutex_lock(&common->philo_at_barrier_mutex);
 	common->philo_at_barrier--;
@@ -96,8 +63,7 @@ int	wait_at_barrier(t_common *common, t_philo *philo)
 			return (SUCCESS);
 		}
 		pthread_mutex_unlock(&common->barrier_flag_mutex);
-		usleep(100);
+		usleep(common->num_of_philo);
 	}
 	return (FAIL);
 }
-

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:56:55 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/22 00:05:34 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:02:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_t_mutex(t_common *common)
+static int	init_t_mutex(t_common *common)
 {
 	pthread_mutex_init(&common->finish_flag_mutex, NULL);
 	pthread_mutex_init(&common->print_mutex, NULL);
@@ -64,4 +64,22 @@ t_philo	*init_philo_list(t_common *common)
 	}
 	philo_list[i - 1].right_fork = 0;
 	return (philo_list);
+}
+
+void	free_t_common(t_common *common)
+{
+	pthread_mutex_destroy(&common->finish_flag_mutex);
+	free(common->fork_status);
+}
+
+void	exit_cleanup(t_common *common, t_philo *philo_list)
+{
+	free(common->fork_status);
+	pthread_mutex_destroy(&common->finish_flag_mutex);
+	pthread_mutex_destroy(&common->print_mutex);
+	pthread_mutex_destroy(&common->philo_at_barrier_mutex);
+	pthread_mutex_destroy(&common->barrier_flag_mutex);
+	pthread_mutex_destroy(&common->finished_philo_mutex);
+	free(common->fork_status_mutex);
+	free(philo_list);
 }

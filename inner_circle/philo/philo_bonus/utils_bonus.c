@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:29:25 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/22 13:57:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:09:24 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 /**
  * does not guard int max or overflow
@@ -43,21 +43,14 @@ int	ft_atoi_num_only(const char *str, int *return_num)
 	return (ERROR);
 }
 
-/**
- * sets status code on error, else, same as malloc
- * takes t_common struct for status code
-*/
-void	*safe_malloc(t_common *common, size_t size)
+void	*nul_guard(void *mem)
 {
-	void	*return_mem;
-
-	return_mem = malloc(size);
-	if (return_mem == NULL)
+	if (mem == NULL)
 	{
-		common->status_code = ERROR;
-		return (NULL);
+		print_error(ERROR);
+		exit(ERROR);
 	}
-	return (return_mem);
+	return (mem);
 }
 
 size_t	get_cur_time_us(void)
@@ -78,12 +71,7 @@ size_t	get_timestamp_ms(t_common *common)
 
 void	printf_philo(t_common *common, int philo_num, char *message)
 {
-	pthread_mutex_lock(&common->print_mutex);
-	if (is_finished(common) == TRUE)
-	{
-		pthread_mutex_unlock(&common->print_mutex);
-		return ;
-	}
+	sem_wait(common->print_lock);
 	printf("%zu %d %s\n", get_timestamp_ms(common), philo_num, message);
-	pthread_mutex_unlock(&common->print_mutex);
+	sem_post(common->print_lock);
 }

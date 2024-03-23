@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:57:46 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/21 23:25:25 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/22 23:50:25 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,19 @@
 # include <sys/time.h>
 # include <string.h>
 
-# include "error.h"
-
 # define TRUE 1
 # define FALSE 0
 
 # define SUCCESS 0
-# define ERROR 1
 # define FAIL 1
 # define FORK_BUSY 2
 
-typedef struct s_common
+/* error_code */
+# define ERROR 1
+# define ENOARG 2
+# define INVARG 3
+
+typedef struct s_common /* shared data struct */
 {
 	pthread_mutex_t	finish_flag_mutex;
 	pthread_mutex_t	print_mutex;
@@ -52,7 +54,7 @@ typedef struct s_common
 	int				*fork_status;
 }	t_common;
 
-typedef struct s_philo
+typedef struct s_philo /* represent each philo's data */
 {
 	t_common		*common;
 	size_t			last_eat_time;
@@ -63,9 +65,6 @@ typedef struct s_philo
 	int				num_eat;
 }	t_philo;
 
-/* error.c */
-int		print_error(int error_num);
-
 /* utils.c */
 int		ft_atoi_num_only(const char *str, int *return_num);
 void	*safe_malloc(t_common *common, size_t size);
@@ -73,35 +72,34 @@ size_t	get_cur_time_us(void);
 size_t	get_timestamp_ms(t_common *common);
 void	printf_philo(t_common *common, int philo_num, char *message);
 
+/* utils2.c */
+size_t	ft_strlen(const char *s);
+void	ft_putstr_fd(char *s, int fd);
+
 /* philo_utils.c */
-size_t	get_last_time_eat(t_philo *philo);
-void	print_philo_dead(t_common *common, t_philo *philo);
-
-/* philo_actions.c */
-int		start_eat_routine(t_common *common, t_philo *philo);
-int		is_dead(t_common *common, t_philo *philo);
 int		is_finished(t_common *common);
-
-/* philo_actions2.c */
-int		get_fork_status(t_common *common, int fork_num);
-void	update_last_time_eat(t_common *common, t_philo *philo);
-void	release_fork(t_common *common, int fork_num);
-int		wait_at_barrier(t_common *common, t_philo *philo);
-/* philo_routine_helper.c */
+int		is_dead(t_common *common, t_philo *philo);
 int		is_in_action(size_t start_time, size_t duration_ms);
+
+/* philo_eat.c */
+int		start_eat_routine(t_common *common, t_philo *philo);
+
+/* barrier.c */
+int		wait_at_barrier(t_common *common, t_philo *philo);
 
 /* routine.c */
 void	start_routine(t_common *common, t_philo *philo_list);
-void	set_finish_flag(t_common *common);
 
-/* philo_routine2.c */
-int		start_sleep_routine(t_common *common, t_philo *philo);
-
-/* init.c */
+/* init_free.c */
 int		init_t_common(t_common *common);
 t_philo	*init_philo_list(t_common *common);
-
-/* free.c */
 void	free_t_common(t_common *common);
+void	exit_cleanup(t_common *common, t_philo *philo_list);
+
+/* take_fork.c */
+int		take_fork(t_common *common, t_philo *philo, int fork_num);
+
+/* main.c */
+int		print_error(int error_num);
 
 #endif

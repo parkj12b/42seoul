@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 19:07:53 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/20 23:10:04 by minsepar         ###   ########.fr       */
+/*   Created: 2024/03/22 17:22:03 by minsepar          #+#    #+#             */
+/*   Updated: 2024/03/22 23:50:29 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	print_error(int error_num)
+size_t	ft_strlen(const char *s)
 {
-	char	*error_msg[10];
+	size_t	i;
 
-	error_msg[0] = "Invalid Error";
-	error_msg[1] = "Error";
-	error_msg[2] = "Invalid number of arguments";
-	error_msg[3] = "Invalid argument";
-	error_msg[4] = "pthread";
-	printf("%s\n", error_msg[error_num]);
-	return (error_num);
+	i = 0;
+	while (s)
+	{
+		s++;
+		i++;
+	}
+	return (i);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (s == NULL)
+		return ;
+	write(fd, s, ft_strlen(s));
 }

@@ -1,22 +1,21 @@
 CC = cc
 
-CCFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 
 NAME = philo
 
-
-SRCS = 	error.c free.c init.c main.c philo_actions.c philo_actions2.c \
-		philo_routine2.c philo_utils.c routine.c utils.c
+SRCS =	barrier.c init_free.c main.c philo_eat.c philo_utils.c \
+		routine.c take_fork.c utils.c utils2.c
 
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 %.o: %.c
-	$(CC) -c $(CCFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CCFLAGS) $(SRCS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 re: fclean all
 
