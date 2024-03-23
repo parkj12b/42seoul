@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:57:08 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 15:54:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:03:35 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	is_dead(t_common *common, t_philo *philo)
 	size_t	time_diff;
 	size_t	time_to_die_usec;
 
-	// printf("last_time_lock [%s]\n", philo->last_time_lock_str);
 	sem_wait(philo->last_time_lock);
 	time_diff = get_cur_time_us() - philo->last_eat_time;
 	time_to_die_usec = common->time_to_die * 1000;
@@ -25,7 +24,7 @@ int	is_dead(t_common *common, t_philo *philo)
 	{
 		sem_wait(common->print_lock);
 		printf("%zu %d died\n", get_timestamp_ms(common), philo->philo_num);
-		// sem_post(philo->last_time_lock);
+		sem_post(philo->last_time_lock);
 		return (TRUE);
 	}
 	sem_post(philo->last_time_lock);

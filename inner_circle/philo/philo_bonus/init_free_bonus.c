@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:13:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 15:55:10 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:22:07 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	init_t_common(t_common *common)
 	sem_unlink("print_lock");
 	sem_unlink("fork");
 	sem_unlink("fork_lock");
+	sem_unlink("process_lock");
 	common->print_lock = sem_open("print_lock", O_CREAT, 0644, 1);
 	common->fork = sem_open("fork", O_CREAT, 0644, common->num_of_philo);
 	common->fork_lock = sem_open("fork_lock", O_CREAT, 0644, 1);
+	common->process_lock = sem_open("process_lock", O_CREAT, 0644, 1);
 }
 
 void	init_last_time_lock(t_common *common,

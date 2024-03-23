@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:32:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 14:53:27 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:18:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@ static void	*philo_routine(void *arg)
 	while (common->num_must_eat != philo->num_eat)
 	{
 		start_eat_routine(common, philo);
+		sem_wait(philo->num_eat_lock);
 		if (common->num_must_eat == philo->num_eat)
-			exit (0);
+		{
+			sem_post(philo->num_eat_lock);
+			return (NULL);
+		}
+		sem_post(philo->num_eat_lock);
 		start_sleep_routine(common, philo);
 		printf_philo(common, philo->philo_num, "is thinking");
 	}
-	exit(0);
+	return (NULL);
 }
 
 static int	is_done_eating(t_common *common, t_philo *philo)
