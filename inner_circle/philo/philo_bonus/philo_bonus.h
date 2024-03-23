@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:46:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/23 16:21:30 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:50:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_common /* shared data struct */
 	sem_t	*fork;
 	sem_t	*print_lock;
 	sem_t	*fork_lock;
-	sem_t	*process_lock;
 	pid_t	*child_pid;
 	char	*last_meal_lock_name;
 	char	*num_eat_lock_name;
