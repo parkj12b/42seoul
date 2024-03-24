@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:13:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 00:56:58 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 13:08:18 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	init_t_common(t_common *common)
 	common->fork_lock_name = "philo_bonus_sln_";
 	sem_unlink("print_lock");
 	sem_unlink("fork");
+	sem_unlink("barrier_lock");
 	common->print_lock = sem_open("print_lock", O_CREAT, 0644, 1);
 	common->fork = sem_open("fork", O_CREAT, 0644, common->num_of_philo);
 	common->parse_str.cursor = 0;
+	common->barrier_lock = sem_open("barrier_lock", O_CREAT, 0644, 0);
 	common->parse_str.malloc_size = 10;
 	common->parse_str.str = malloc(11);
 	common->parse_str.str[0] = 0;
@@ -85,11 +87,8 @@ void	init_self_lock(t_common *common, t_philo *philo, char *philo_num_str)
 
 void	init_t_philo(t_common *common, t_philo *philo, int philo_num)
 {
-	struct timeval	time;
 	char			*philo_num_str;
 
-	gettimeofday(&time, NULL);
-	philo->last_eat_time = common->start_time;
 	philo->common = common;
 	philo->philo_num = philo_num;
 	philo_num_str = ft_itoa(philo_num);
@@ -98,11 +97,4 @@ void	init_t_philo(t_common *common, t_philo *philo, int philo_num)
 	init_self_lock(common, philo, philo_num_str);
 	free(philo_num_str);
 	philo->num_eat = 0;
-}
-
-void	exit_cleanup(t_common *common)
-{
-	free(common->child_pid);
-	sem_unlink("print_lock");
-	sem_unlink("fork");
 }

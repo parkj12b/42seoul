@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:46:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 00:56:00 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:05:44 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_common /* shared data struct */
 	size_t		start_time;
 	sem_t		*fork;
 	sem_t		*print_lock;
+	sem_t		*barrier_lock;
 	pid_t		*child_pid;
 	char		*last_meal_lock_name;
 	char		*num_eat_lock_name;
@@ -84,7 +85,7 @@ int		ft_atoi_num_only(const char *str, int *return_num);
 size_t	get_cur_time_us(void);
 size_t	get_timestamp_ms(t_common *common);
 void	*nul_guard(void *mem);
-void	printf_philo(t_common *common, int philo_num, char *message);
+void	printf_philo(t_common *common, int philo_num, char *message, int lock);
 
 /* utils_bonus2.c */
 size_t	ft_strlen(const char *s);
@@ -92,10 +93,13 @@ void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 char	*ft_strdup(const char *s1);
 
-/* init_free_bonus.c */
+/* free_bonus.c */
+void	exit_cleanup(t_common *common);
+void	cleanup_philo(t_common *common, t_philo *philo_list);
+
+/* init_bonus.c */
 void	init_t_common(t_common *common);
 void	init_t_philo(t_common *common, t_philo *philo, int philo_num);
-void	exit_cleanup(t_common *common);
 void	init_self_lock(t_common *common, t_philo *philo, char *philo_num_str);
 
 /* itoa_bonus.c */

@@ -1,12 +1,12 @@
 CC =	cc
 
-CFLAGS = -Wall -Wextra -Werror -g -pg
+CFLAGS = -Wall -Wextra -Werror -g
 
 NAME =	philo_bonus
 
-SRCS =	fork_philo_bonus.c init_free_bonus.c itoa_bonus.c main_bonus.c \
+SRCS =	fork_philo_bonus.c init_bonus.c itoa_bonus.c main_bonus.c \
 		philo_eat_bonus.c philo_util_bonus.c routine_bonus.c utils_bonus.c \
-		utils_bonus2.c waiter_bonus.c str_parser_bonus.c
+		utils_bonus2.c waiter_bonus.c str_parser_bonus.c free_bonus.c
 
 OBJS =	$(SRCS:.c=.o)
 

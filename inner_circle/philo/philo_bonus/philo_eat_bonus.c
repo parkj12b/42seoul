@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 23:17:47 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 00:50:07 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 13:18:09 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 static void	update_last_time_eat(t_common *common, t_philo *philo)
 {
 	sem_wait(philo->last_time_lock);
+	sem_wait(common->print_lock);
 	philo->last_eat_time = get_cur_time_us();
-	printf_philo(common, philo->philo_num, "has taken a fork");
-	printf_philo(common, philo->philo_num, "has taken a fork");
-	printf_philo(common, philo->philo_num, "is eating");
+	printf_philo(common, philo->philo_num, "has taken a fork", FALSE);
+	printf_philo(common, philo->philo_num, "has taken a fork", FALSE);
+	printf_philo(common, philo->philo_num, "is eating", FALSE);
+	sem_post(common->print_lock);
 	sem_post(philo->last_time_lock);
 }
 

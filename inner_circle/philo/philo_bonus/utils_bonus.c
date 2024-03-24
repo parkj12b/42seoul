@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:29:25 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 01:34:04 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:03:24 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	*nul_guard(void *mem)
 	if (mem == NULL)
 	{
 		print_error(ERROR);
+		kill(0, SIGTERM);
 		exit(ERROR);
 	}
 	return (mem);
@@ -69,26 +70,27 @@ size_t	get_timestamp_ms(t_common *common)
 	return (time_diff / 1000);
 }
 
-void	printf_philo(t_common *common, int philo_num, char *message)
+void	printf_philo(t_common *common, int philo_num, char *message, int lock)
 {
-	// t_parse_str	*parse_str;
-	// char		*temp;
+	t_parse_str	*parse_str;
+	char		*temp;
 
-	// parse_str = &common->parse_str;
-	sem_wait(common->print_lock);
-	// parse_str->cursor = 0;
-	// parse_str->str[0] = 0;
-	// temp = ft_itoa(get_timestamp_ms(common));
-	// append_str(parse_str, temp);
-	// append_char(parse_str, ' ');
-	// free(temp);
-	// temp = ft_itoa(philo_num);
-	// append_str(parse_str, temp);
-	// append_char(parse_str, ' ');
-	// free(temp);
-	// append_str(parse_str, message);
-	// append_char(parse_str, '\n');
-	// write(1, parse_str->str, parse_str->cursor);
-	printf("%zu %d %s\n", get_timestamp_ms(common), philo_num, message);
-	sem_post(common->print_lock);
+	parse_str = &common->parse_str;
+	if (lock == TRUE)
+		sem_wait(common->print_lock);
+	parse_str->cursor = 0;
+	parse_str->str[0] = 0;
+	temp = ft_itoa(get_timestamp_ms(common));
+	append_str(parse_str, temp);
+	append_char(parse_str, ' ');
+	free(temp);
+	temp = ft_itoa(philo_num);
+	append_str(parse_str, temp);
+	append_char(parse_str, ' ');
+	free(temp);
+	append_str(parse_str, message);
+	append_char(parse_str, '\n');
+	write(1, parse_str->str, parse_str->cursor);
+	if (lock == TRUE)
+		sem_post(common->print_lock);
 }

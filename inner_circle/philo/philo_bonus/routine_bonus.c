@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 20:32:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 01:27:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 13:18:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	start_sleep_routine(t_common *common, t_philo *philo)
 {
-	printf_philo(common, philo->philo_num, "is sleeping");
+	printf_philo(common, philo->philo_num, "is sleeping", TRUE);
 	ft_msleep(common->time_to_sleep);
 }
 
@@ -36,7 +36,7 @@ static void	*philo_routine(void *arg)
 		}
 		sem_post(philo->num_eat_lock);
 		start_sleep_routine(common, philo);
-		printf_philo(common, philo->philo_num, "is thinking");
+		printf_philo(common, philo->philo_num, "is thinking", TRUE);
 	}
 	return (NULL);
 }

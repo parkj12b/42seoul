@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:57:08 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 01:32:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 13:09:12 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	print_dead(t_common *common, int philo_num, char *message)
 	append_str(parse_str, message);
 	append_char(parse_str, '\n');
 	write(1, parse_str->str, parse_str->cursor);
-	// printf("%zu %d %s\n", get_timestamp_ms(common), philo_num, message);
 }
 
 int	is_dead(t_common *common, t_philo *philo)
@@ -46,7 +45,6 @@ int	is_dead(t_common *common, t_philo *philo)
 	{
 		sem_wait(common->print_lock);
 		print_dead(common, philo->philo_num, "died");
-		// print_dead("%zu %d died\n", get_timestamp_ms(common), philo->philo_num);
 		sem_post(philo->last_time_lock);
 		return (TRUE);
 	}

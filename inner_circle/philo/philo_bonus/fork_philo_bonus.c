@@ -6,21 +6,18 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:35:32 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 01:23:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:12:12 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	terminate_program(t_common *common)
+static void	terminate_program(void)
 {
 	int	i;
 
 	i = -1;
-	while (++i < common->num_of_philo)
-	{
-		kill(common->child_pid[i], SIGKILL);
-	}
+	kill(0, SIGTERM);
 }
 
 static void	parent_wait(t_common *common)
@@ -34,7 +31,7 @@ static void	parent_wait(t_common *common)
 		waitpid(0, &wstatus, 0);
 		if (WEXITSTATUS(wstatus) != 0)
 		{
-			terminate_program(common);
+			terminate_program();
 			break ;
 		}
 	}
@@ -54,21 +51,37 @@ static t_philo	*init_philo_list(t_common *common)
 	return (philo_list);
 }
 
-void	fork_philo(t_common *common)
+void	parent_routine(t_common *common, t_philo *philo_list)
 {
-	t_philo		*philo;
 	pthread_t	waiter;
 	int			i;
 
+	pthread_create(&waiter, NULL, serve_forks, (void *)philo_list);
+	ft_msleep(2000);
 	i = -1;
-	common->start_time = get_cur_time_us();
+	while (++i < common->num_of_philo)
+	{
+		sem_post(common->barrier_lock);
+	}
+	parent_wait(common);
+	cleanup_philo(common, philo_list);
+}
+
+void	fork_philo(t_common *common)
+{
+	t_philo		*philo;
+	int			i;
+
+	i = -1;
 	philo = init_philo_list(common);
+	common->start_time = get_cur_time_us();
+	common->start_time += 2000000;
 	while (++i < common->num_of_philo)
 	{
 		common->child_pid[i] = fork();
 		if (common->child_pid[i] == 0)
 		{
-			usleep(2000000);
+			sem_wait(common->barrier_lock);
 			sem_wait(philo[i].last_time_lock);
 			philo[i].last_eat_time = get_cur_time_us();
 			sem_post(philo[i].last_time_lock);
@@ -76,8 +89,5 @@ void	fork_philo(t_common *common)
 		}
 	}
 	if (common->child_pid[0] != 0)
-	{
-		pthread_create(&waiter, NULL, serve_forks, (void *)philo);
-		parent_wait(common);
-	}
+		parent_routine(common, philo);
 }
