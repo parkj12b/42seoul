@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:49:33 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 16:01:09 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:16:06 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	free_philo_list(t_common *common, t_philo *philo_list)
 	{
 		free_philo(&philo_list[i]);
 	}
+	free(philo_list);
 }
