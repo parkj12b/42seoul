@@ -6,13 +6,24 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:35:32 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 14:19:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:59:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	parent_wait(t_common *common)
+static void	terminate_program(t_common *common)
+{
+	int	i;
+
+	i = -1;
+	while (++i < common->num_of_philo)
+	{
+		kill(common->child_pid[i], SIGTERM);
+	}
+}
+
+static void	parent_wait(t_common *common, pid_t pid)
 {
 	int	i;
 	int	wstatus;
@@ -23,7 +34,8 @@ static void	parent_wait(t_common *common)
 		waitpid(0, &wstatus, 0);
 		if (WEXITSTATUS(wstatus) != 0)
 		{
-			kill(0, SIGTERM);
+			terminate_program(common);
+			kill(pid, SIGTERM);
 			break ;
 		}
 	}
@@ -45,17 +57,19 @@ static t_philo	*init_philo_list(t_common *common)
 
 void	parent_routine(t_common *common, t_philo *philo_list)
 {
-	pthread_t	waiter;
-	int			i;
+	pid_t	waiter_pid;
+	int		i;
 
-	pthread_create(&waiter, NULL, serve_forks, (void *)philo_list);
+	waiter_pid = fork();
+	if (waiter_pid == 0)
+		serve_forks(philo_list);
 	ft_msleep(2000);
 	i = -1;
 	while (++i < common->num_of_philo)
 	{
 		sem_post(common->barrier_lock);
 	}
-	parent_wait(common);
+	parent_wait(common, waiter_pid);
 	cleanup_philo(common, philo_list);
 }
 
