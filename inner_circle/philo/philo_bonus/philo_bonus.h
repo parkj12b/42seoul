@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:46:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 15:41:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:01:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ char	*ft_strdup(const char *s1);
 
 /* free_bonus.c */
 void	exit_cleanup(t_common *common);
-void	cleanup_philo(t_common *common, t_philo *philo_list);
+void	free_philo(t_philo *philo);
+void	free_philo_list(t_common *common, t_philo *philo_list);
 
 /* init_bonus.c */
 void	init_t_common(t_common *common);

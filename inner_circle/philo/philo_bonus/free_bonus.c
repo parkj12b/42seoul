@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:49:33 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 14:10:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:01:09 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,26 @@ void	exit_cleanup(t_common *common)
 	sem_unlink("barrier_lock");
 }
 
-void	cleanup_philo(t_common *common, t_philo *philo_list)
+void	free_philo(t_philo *philo)
 {
-	t_philo	*philo;
-	int		i;
+	sem_close(philo->last_time_lock);
+	sem_close(philo->num_eat_lock);
+	sem_close(philo->fork_lock);
+	sem_unlink(philo->last_time_lock_str);
+	sem_unlink(philo->num_eat_lock_str);
+	sem_unlink(philo->fork_lock_str);
+	free(philo->last_time_lock_str);
+	free(philo->num_eat_lock_str);
+	free(philo->fork_lock_str);
+}
+
+void	free_philo_list(t_common *common, t_philo *philo_list)
+{
+	int	i;
 
 	i = -1;
 	while (++i < common->num_of_philo)
 	{
-		philo = &philo_list[i];
-		sem_close(philo->last_time_lock);
-		sem_close(philo->num_eat_lock);
-		sem_close(philo->fork_lock);
-		sem_unlink(philo->last_time_lock_str);
-		sem_unlink(philo->num_eat_lock_str);
-		sem_unlink(philo->fork_lock_str);
-		free(philo->last_time_lock_str);
-		free(philo->num_eat_lock_str);
-		free(philo->fork_lock_str);
+		free_philo(&philo_list[i]);
 	}
 }
