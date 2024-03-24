@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:35:32 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 16:09:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:25:29 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static void	parent_wait(t_common *common, pid_t pid)
 		if (WEXITSTATUS(wstatus) != 0)
 		{
 			terminate_program(common);
-			kill(pid, SIGTERM);
 			break ;
 		}
 	}
+	kill(pid, SIGTERM);
 }
 
 static t_philo	*init_philo_list(t_common *common)

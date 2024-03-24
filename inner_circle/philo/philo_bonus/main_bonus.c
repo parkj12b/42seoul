@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:00:38 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 16:10:21 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:17:30 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,8 @@ int	print_error(int error_num)
 	exit (ERROR);
 }
 
-void	check_leaks()
-{
-	system("leaks philo_bonus");
-}
-
 int	main(int argc, char **argv)
 {
-	atexit(check_leaks);
 	t_common	common;
 
 	parse_input(argc, argv, &common);
