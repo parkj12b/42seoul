@@ -6,19 +6,11 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:35:32 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 14:12:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:19:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-static void	terminate_program(void)
-{
-	int	i;
-
-	i = -1;
-	kill(0, SIGTERM);
-}
 
 static void	parent_wait(t_common *common)
 {
@@ -31,7 +23,7 @@ static void	parent_wait(t_common *common)
 		waitpid(0, &wstatus, 0);
 		if (WEXITSTATUS(wstatus) != 0)
 		{
-			terminate_program();
+			kill(0, SIGTERM);
 			break ;
 		}
 	}
