@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:46:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 14:05:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:41:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@
 # define ENOARG 2
 # define INVARG 3
 
+# define LAST_MEAL_LOCK "philo_bonus_lml_"
+# define NUM_EAT_LOCK "philo_bonus_nel_"
+# define FORK_LOCK "philo_bonus_sln_"
+
 typedef struct s_parse_str
 {
 	char	*str;
@@ -52,9 +56,6 @@ typedef struct s_common /* shared data struct */
 	sem_t		*print_lock;
 	sem_t		*barrier_lock;
 	pid_t		*child_pid;
-	char		*last_meal_lock_name;
-	char		*num_eat_lock_name;
-	char		*fork_lock_name;
 	int			num_of_philo;
 	int			time_to_die;
 	int			time_to_eat;
@@ -100,7 +101,7 @@ void	cleanup_philo(t_common *common, t_philo *philo_list);
 /* init_bonus.c */
 void	init_t_common(t_common *common);
 void	init_t_philo(t_common *common, t_philo *philo, int philo_num);
-void	init_self_lock(t_common *common, t_philo *philo, char *philo_num_str);
+void	init_self_lock(t_philo *philo, char *philo_num_str);
 
 /* itoa_bonus.c */
 char	*ft_itoa(int n);

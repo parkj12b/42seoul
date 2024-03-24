@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_free_bonus.c                                  :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:13:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/24 13:08:18 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:41:13 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 void	init_t_common(t_common *common)
 {
 	common->child_pid = nul_guard(malloc(sizeof(pid_t) * common->num_of_philo));
-	common->last_meal_lock_name = "philo_bonus_lml_";
-	common->num_eat_lock_name = "philo_bonus_nel_";
-	common->fork_lock_name = "philo_bonus_sln_";
 	sem_unlink("print_lock");
 	sem_unlink("fork");
 	sem_unlink("barrier_lock");
@@ -30,17 +27,16 @@ void	init_t_common(t_common *common)
 	common->parse_str.str[0] = 0;
 }
 
-void	init_last_time_lock(t_common *common,
-	t_philo *philo, char *philo_num_str)
+void	init_last_time_lock(t_philo *philo, char *philo_num_str)
 {
 	size_t	lock_str_len;
 
 	lock_str_len
-		= ft_strlen(common->last_meal_lock_name) + ft_strlen(philo_num_str) + 1;
+		= ft_strlen(LAST_MEAL_LOCK) + ft_strlen(philo_num_str) + 1;
 	philo->last_time_lock_str
 		= nul_guard(malloc(sizeof(char) * (lock_str_len)));
 	philo->last_time_lock_str[0] = 0;
-	ft_strlcat(philo->last_time_lock_str, common->last_meal_lock_name,
+	ft_strlcat(philo->last_time_lock_str, LAST_MEAL_LOCK,
 		lock_str_len);
 	ft_strlcat(philo->last_time_lock_str,
 		philo_num_str, lock_str_len);
@@ -49,18 +45,17 @@ void	init_last_time_lock(t_common *common,
 		= sem_open(philo->last_time_lock_str, O_CREAT, 0644, 1);
 }
 
-void	init_num_eat_lock(t_common *common,
-	t_philo *philo, char *philo_num_str)
+void	init_num_eat_lock(t_philo *philo, char *philo_num_str)
 {
 	size_t	lock_str_len;
 
 	lock_str_len
-		= ft_strlen(common->num_eat_lock_name) + ft_strlen(philo_num_str) + 1;
+		= ft_strlen(NUM_EAT_LOCK) + ft_strlen(philo_num_str) + 1;
 	philo->num_eat_lock_str
 		= nul_guard(malloc(sizeof(char) * (lock_str_len)));
 	philo->num_eat_lock_str[0] = 0;
 	ft_strlcat(philo->num_eat_lock_str,
-		common->num_eat_lock_name, lock_str_len);
+		NUM_EAT_LOCK, lock_str_len);
 	ft_strlcat(philo->num_eat_lock_str, philo_num_str,
 		lock_str_len);
 	sem_unlink(philo->num_eat_lock_str);
@@ -68,16 +63,16 @@ void	init_num_eat_lock(t_common *common,
 		= sem_open(philo->num_eat_lock_str, O_CREAT, 0644, 1);
 }
 
-void	init_self_lock(t_common *common, t_philo *philo, char *philo_num_str)
+void	init_self_lock(t_philo *philo, char *philo_num_str)
 {
 	size_t	lock_str_len;
 
 	lock_str_len
-		= ft_strlen(common->fork_lock_name) + ft_strlen(philo_num_str) + 1;
+		= ft_strlen(FORK_LOCK) + ft_strlen(philo_num_str) + 1;
 	philo->fork_lock_str
 		= nul_guard(malloc(sizeof(char) * (lock_str_len)));
 	philo->fork_lock_str[0] = 0;
-	ft_strlcat(philo->fork_lock_str, common->fork_lock_name, lock_str_len);
+	ft_strlcat(philo->fork_lock_str, FORK_LOCK, lock_str_len);
 	ft_strlcat(philo->fork_lock_str, philo_num_str,
 		lock_str_len);
 	sem_unlink(philo->fork_lock_str);
@@ -92,9 +87,9 @@ void	init_t_philo(t_common *common, t_philo *philo, int philo_num)
 	philo->common = common;
 	philo->philo_num = philo_num;
 	philo_num_str = ft_itoa(philo_num);
-	init_last_time_lock(common, philo, philo_num_str);
-	init_num_eat_lock(common, philo, philo_num_str);
-	init_self_lock(common, philo, philo_num_str);
+	init_last_time_lock(philo, philo_num_str);
+	init_num_eat_lock(philo, philo_num_str);
+	init_self_lock(philo, philo_num_str);
 	free(philo_num_str);
 	philo->num_eat = 0;
 }
