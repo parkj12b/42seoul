@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:28:30 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/20 22:15:24 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/05/24 04:59:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <cstdlib>
+#include <cstdio>
 #include "PhoneBook.hpp"
 #include "myDefines.hpp"
 
