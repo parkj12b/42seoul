@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:13:45 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/23 16:32:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/05/24 08:06:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
 #include "myDefines.hpp"
 #include "File.hpp"
 
@@ -35,7 +36,7 @@ int	check_arg_valid(int argc, char **argv)
 
 int	readFile(File &file)
 {
-	std::ifstream in(file.getFileName());
+	std::ifstream in(file.getFileName().data());
 	if (!in.is_open())
 	{
 		std::cerr << "error opening file" << std::endl;
@@ -52,7 +53,7 @@ int	readFile(File &file)
 
 int	writeFile(File &file)
 {
-	std::ofstream out(file.getFileName() + ".replace");
+	std::ofstream out((file.getFileName() + ".replace").data());
 	if (!out.is_open())
 	{
 		std::cerr << "error opening file" << std::endl;

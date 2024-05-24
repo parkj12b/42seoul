@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:25:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/23 14:07:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/05/24 07:41:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <cstdlib>
 #include "Weapon.hpp"
 #include "HumanA.hpp"
 #include "HumanB.hpp"

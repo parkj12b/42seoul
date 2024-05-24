@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Harl.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:41:48 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/23 18:20:40 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/05/24 08:11:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ void	Harl::complain(std::string level)
 	{
 	case 0:
 		(this->*f[0])();
+		// fall through
 	case 1:
 		(this->*f[1])();
+		// fall through
 	case 2:
 		(this->*f[2])();
+		// fall through
 	case 3:
 		(this->*f[3])();
 		break;
