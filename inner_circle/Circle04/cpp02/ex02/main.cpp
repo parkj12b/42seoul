@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 21:28:49 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/25 19:22:48 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/05/26 05:50:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <cmath>
 #include "Fixed.hpp"
 
 int	main(void)
