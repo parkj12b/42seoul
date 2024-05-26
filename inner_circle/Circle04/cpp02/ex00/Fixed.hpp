@@ -1,41 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   Fixed.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 14:32:17 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/24 20:49:20 by minsepar         ###   ########.fr       */
+/*   Created: 2024/05/23 19:37:21 by minsepar          #+#    #+#             */
+/*   Updated: 2024/05/23 20:58:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <cstring>
+#ifndef __FIXED_HPP__
+# define __FIXED_HPP__
 
-void	str_to_upper(char *str)
-{
-	while (*str)
-	{
-		*str = std::toupper(*str);
-		str++;
-	}
-}
+class Fixed {
+public:
+	Fixed(void);
+	Fixed(const Fixed &fixed);
+	Fixed	&operator= (const Fixed &fixed);
+	~Fixed(void);
+	int		getRawBits(void) const;
+	void	setRawBits(int const raw);
+private:
+	int					_num;
+	static const int	_fraction_bits;
+};
 
-int main(int argc, char **argv)
-{
-	int		i;
-
-	if (argc == 1)
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
-	else
-	{
-		i = 0;
-		while (++i < argc)
-		{
-			str_to_upper(argv[i]);
-			std::cout << argv[i];
-		}
-	}
-	std::cout << std::endl;	
-}
+#endif

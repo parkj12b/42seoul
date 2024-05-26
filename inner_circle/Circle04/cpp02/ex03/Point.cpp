@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   Point.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 14:32:17 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/24 20:49:20 by minsepar         ###   ########.fr       */
+/*   Created: 2024/05/25 15:50:21 by minsepar          #+#    #+#             */
+/*   Updated: 2024/05/25 18:16:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <cstring>
+#include "Point.hpp"
 
-void	str_to_upper(char *str)
+Point::Point(void)
+	:_x(0), _y(0)
 {
-	while (*str)
-	{
-		*str = std::toupper(*str);
-		str++;
-	}
 }
 
-int main(int argc, char **argv)
+Point::Point(const float y, const float x)
+	:_x(x), _y(y)
 {
-	int		i;
+}
 
-	if (argc == 1)
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
-	else
-	{
-		i = 0;
-		while (++i < argc)
-		{
-			str_to_upper(argv[i]);
-			std::cout << argv[i];
-		}
-	}
-	std::cout << std::endl;	
+Point::Point(const Point &point)
+	:_x(point._x), _y(point._y)
+{
+}
+
+Point::~Point(void)
+{
+}
+
+const Fixed	&Point::getX(void) const
+{
+	return (_x);
+}
+
+const Fixed	&Point::getY(void) const
+{
+	return (_y);
 }

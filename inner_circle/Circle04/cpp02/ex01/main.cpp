@@ -5,35 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 16:51:58 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/24 17:15:38 by minsepar         ###   ########.fr       */
+/*   Created: 2024/05/23 21:28:49 by minsepar          #+#    #+#             */
+/*   Updated: 2024/05/23 21:32:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
 #include <iostream>
-#include <cstdlib>
+#include "Fixed.hpp"
 
-void	leaks()
+int	main(void)
 {
-	system("leaks exec.out");
-}
+	Fixed		a;
+	Fixed const	b(10);
+	Fixed const	c(42.42f);
+	Fixed const	d(b);
+	
+	a = Fixed(1234.4321f);
 
-int main(void)
-{
-	// atexit(leaks);
-	Zombie *zombie2;
-	{
-		Zombie zombie1("a");
-		
-		zombie2 = new Zombie("b");
-		zombie1.announce();
-		zombie2->announce();
-		std::cout << std::endl << "randomChump called" << std::endl;
-		randomChump("c");
-		std::cout << "randomChump call end" << std::endl << std::endl;
-		delete(zombie2);
-	}
-	// delete (zombie2);
-	return 0;
+	std::cout << "a is " << a << std::endl;
+	std::cout << "b is " << b << std::endl;
+	std::cout << "c is " << c << std::endl;
+	std::cout << "d is " << d << std::endl;
+	
+	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
+	std::cout << "a is " << b.toInt() << " as integer" << std::endl;
+	std::cout << "a is " << c.toInt() << " as integer" << std::endl;
+	std::cout << "a is " << d.toInt() << " as integer" << std::endl;
+	
 }
