@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Animal.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:28:32 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/28 23:15:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:46:53 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ protected:
 	std::string	_type;
 public:
 	Animal(void);
-	Animal(std::string type);
+	explicit Animal(const std::string &type);
 	virtual ~Animal(void);
 	Animal(const Animal &animal);
 	Animal &operator= (const Animal &animal);

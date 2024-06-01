@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 18:12:10 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/30 18:33:46 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:38:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <cstdlib>
 #include "WrongCat.hpp"
 #include "Animal.hpp"
 #include "Cat.hpp"

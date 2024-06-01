@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cat.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:45:31 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/30 18:32:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:39:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ Cat::~Cat(void) {
   delete _brain;
 }
 
-Cat::Cat(const Cat &cat) {
+Cat::Cat(const Cat &cat)
+  : Animal(cat._type)
+{
   _brain = new Brain(*cat._brain);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cat.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:45:31 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/28 23:00:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:35:52 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ Cat::Cat(void) : Animal("Cat") {
 
 Cat::~Cat(void) { std::cout << "[Cat] destructor called" << std::endl; }
 
-Cat::Cat(const Cat &cat) { *this = cat; }
+Cat::Cat(const Cat &cat)
+  :Animal(cat._type)
+{
+}
 
 Cat &Cat::operator=(const Cat &cat) {
   if (this != &cat) {

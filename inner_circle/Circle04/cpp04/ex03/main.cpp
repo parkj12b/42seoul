@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:08:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/30 16:05:43 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:49:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <cstdlib>
 #include "IMateriaSource.hpp"
 #include "MateriaSource.hpp"
 #include "AMateria.hpp"

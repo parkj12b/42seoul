@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Dog.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:52:38 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/30 18:32:50 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:39:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ Dog::~Dog(void) {
   delete _brain;
 }
 
-Dog::Dog(const Dog &dog) { _brain = new Brain(*dog._brain); }
+Dog::Dog(const Dog &dog)
+  : Animal(dog._type)
+{
+  _brain = new Brain(*dog._brain);
+}
 
 Dog &Dog::operator=(const Dog &dog) {
   if (this != &dog) {

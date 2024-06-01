@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Animal.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:35:25 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/28 23:14:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:44:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Animal::Animal(void)
 	std::cout << "[Animal] default constructor called." << std::endl;
 }
 
-Animal::Animal(std::string type)
+Animal::Animal(const std::string &type)
 	:_type(type)
 {
 	std::cout << "[Animal] default constructor called." << std::endl;

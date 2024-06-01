@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Dog.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:52:38 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/28 23:00:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:36:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ Dog::Dog(void) : Animal("Dog") {
 
 Dog::~Dog(void) { std::cout << "[Dog] destructor called" << std::endl; }
 
-Dog::Dog(const Dog &dog) { *this = dog; }
+Dog::Dog(const Dog &dog)
+  : Animal(dog._type)
+{
+}
 
 Dog &Dog::operator=(const Dog &dog) {
   if (this != &dog) {

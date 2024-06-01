@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   WrongCat.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:12:02 by minsepar          #+#    #+#             */
-/*   Updated: 2024/05/28 23:00:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/01 05:38:17 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ WrongCat::~WrongCat(void) {
   std::cout << "[WrongCat] destructor called" << std::endl;
 }
 
-WrongCat::WrongCat(const WrongCat &wrongCat) { *this = wrongCat; }
+WrongCat::WrongCat(const WrongCat &wrongCat)
+  : WrongAnimal(wrongCat._type)
+{
+  *this = wrongCat;
+}
 
 WrongCat &WrongCat::operator=(const WrongCat &wrongCat) {
   if (this != &wrongCat) {
