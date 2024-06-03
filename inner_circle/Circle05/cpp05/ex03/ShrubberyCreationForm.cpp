@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 22:33:36 by minsepar          #+#    #+#             */
-/*   Updated: 2024/06/01 15:41:54 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/03 06:44:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 	checkFormSigned();
 	checkExecutePermission(executor);
 	
-	std::ofstream out(_target + "_shrubbery");
+	std::ofstream out((_target + "_shrubbery").c_str());
 	if (!out.is_open())
 	{
 		throw std::runtime_error("failed to open file");

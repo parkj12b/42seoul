@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   RobotomyRequestForm.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 23:23:42 by minsepar          #+#    #+#             */
-/*   Updated: 2024/06/01 15:35:47 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/03 06:44:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
 #include <iostream>
 #include <sys/time.h>
+#include <cstdlib>
 #include "RobotomyRequestForm.hpp"
 
 RobotomyRequestForm::~RobotomyRequestForm()
