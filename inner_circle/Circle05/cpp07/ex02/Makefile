@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jacob <jacob@student.42.fr>                +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/20 14:54:41 by minsepar          #+#    #+#              #
-#    Updated: 2024/06/06 15:29:42 by jacob            ###   ########.fr        #
+#    Updated: 2024/06/06 14:45:41 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,10 @@ NAME		=	exec.out
 all:	$(NAME)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I. -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME);
+	$(CXX) $(CXXFLAGS) -I. $(OBJS) -o $(NAME);
 
 clean:
 	@rm -rf $(OBJS)

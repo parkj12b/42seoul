@@ -1,10 +1,17 @@
 #include <iostream>
 #include <Array.hpp>
-#include "iter.hpp"
+#include <sys/time.h>
+#include <cstdlib>
 
 #define MAX_VAL 750
+void check()
+{
+    system("leaks exec.out");
+}
+
 int main(int, char**)
 {
+    atexit(check);
     Array<int> numbers(MAX_VAL);
     int* mirror = new int[MAX_VAL];
     srand(time(NULL));
@@ -19,6 +26,7 @@ int main(int, char**)
         Array<int> tmp = numbers;
         Array<int> test(tmp);
     }
+    std::cout << "here" << std::endl;
 
     for (int i = 0; i < MAX_VAL; i++)
     {
@@ -48,7 +56,17 @@ int main(int, char**)
     for (int i = 0; i < MAX_VAL; i++)
     {
         numbers[i] = rand();
+        std::cout << numbers[i] << ' ';
     }
-    delete [] mirror;//
+    std::cout << std::endl;
+
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        numbers[i] = i;
+        std::cout << numbers[i] << ' ';
+    }
+    std::cout << std::endl;
+
+    delete [] mirror;
     return 0;
 }
