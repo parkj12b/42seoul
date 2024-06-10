@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jacob <jacob@student.42.fr>                +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/20 14:54:41 by minsepar          #+#    #+#              #
-#    Updated: 2024/06/06 15:08:22 by jacob            ###   ########.fr        #
+#    Updated: 2024/06/10 09:42:37 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		=	main.cpp whatever.hpp
+SRCS		=	main.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 
@@ -30,7 +30,6 @@ $(NAME): $(OBJS)
 
 clean:
 	@rm -rf $(OBJS)
-	@rm -rf *_shrubbery
 
 fclean: clean
 	@rm -rf $(NAME)
