@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:40:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/06/04 17:38:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:27:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <sstream>
 #include <cmath>
 #include <iomanip>
+#include <limits>
 #include "ScalarConverter.hpp"
 
 int	checkType(std::string str)

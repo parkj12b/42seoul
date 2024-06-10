@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 17:08:34 by minsepar          #+#    #+#             */
-/*   Updated: 2024/06/03 20:35:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:13:34 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ int main(int argc, char **argv)
 		std::cout << "invalid number of arguments" << std::endl;
 		return 0;
 	}
+
+	double f = 2147483648;
+	std::cout << f << std::endl;
 
 	// ScalarConverter temp;
 	ScalarConverter::convert(argv[1]);
