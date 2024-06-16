@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Span.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 17:33:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/06/15 19:05:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/16 05:15:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
+#include <algorithm>
+#include <climits>
 #include "Span.hpp"
 
 Span::Span(unsigned int n) : _n(n) {}

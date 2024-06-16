@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 20:08:02 by minsepar          #+#    #+#             */
-/*   Updated: 2024/06/16 13:59:00 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/16 05:17:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stack>
 #include <list>
 #include <iostream>
+#include <algorithm>
 #include "MutantStack.hpp"
 
 int main() {
@@ -52,23 +53,6 @@ int main() {
   std::cout << "Top: " << cmstack.top() << std::endl;
   std::cout << "Empty: " << cmstack.empty() << std::endl;
   std::cout << "Size: " << cmstack.size() << std::endl;
-  mstack.swap(cmstack);
-
-  MutantStack<int>::iterator mstackIter = mstack.begin();
-  MutantStack<int>::iterator cmstackIter = cmstack.begin();
-
-  std::cout << std::endl << "=============================" << std::endl;
-
-  while (mstackIter != mstack.end()) {
-    std::cout << *mstackIter << std::endl;
-    ++mstackIter;
-  }
-  std::cout << std::endl << "=============================" << std::endl;
-
-  while (cmstackIter != cmstack.end()) {
-    std::cout << *cmstackIter << std::endl;
-    ++cmstackIter;
-  }
 
   return 0;
 }

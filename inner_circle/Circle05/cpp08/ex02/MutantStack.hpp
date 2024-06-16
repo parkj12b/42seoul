@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MutantStack.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 20:08:10 by minsepar          #+#    #+#             */
-/*   Updated: 2024/06/15 22:15:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/16 05:17:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class MutantStack : public std::stack<T>{
 public:
 	MutantStack() {}
 	~MutantStack() {}
-	MutantStack(const MutantStack<T> &other) {
+	MutantStack(const MutantStack<T> &other) : std::stack<T>() {
 		*this = other;
 	}
 	MutantStack<T> &operator=(const MutantStack<T> &other) {
