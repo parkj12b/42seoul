@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/20 14:54:41 by minsepar          #+#    #+#              #
-#    Updated: 2024/06/27 23:16:52 by minsepar         ###   ########.fr        #
+#    Updated: 2024/06/27 15:44:10 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRCS		=	main.cpp PmergeMe.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 
-CXXFLAGS	=	-pg -Wall -Wextra -Werror -std=c++98
+CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -O3
 
 CXX 		=	c++
 

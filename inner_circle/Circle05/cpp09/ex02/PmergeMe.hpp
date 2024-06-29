@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 15:24:25 by minsepar          #+#    #+#             */
-/*   Updated: 2024/06/27 23:13:17 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:44:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 #define ArrayIndex(x) (x - 1)
 
@@ -31,39 +32,15 @@ private:
 		recursiveSortDeque(std::deque< std::pair<int, int> > &d);
 	std::vector< std::pair<int, int> >
 		recursiveSortVector(std::vector< std::pair<int, int> > &v);
-	
+	template <typename T>
+	void	printContainer(T &v);
+
 	template <typename T>
 	void	parseInput(char **argv, T &v);
 	
 	template <typename T>
 	int	binarySearch(T &insertV, int val, int jacobsthal);
 	
-	template <typename T>
-	void	printContainer(T &v)
-	{
-		for (typename T::iterator it = v.begin(); it != v.end(); ++it)
-			std::cout << *it << " ";
-		std::cout << std::endl;
-	}
-	
-	template <>
-	void	printContainer(std::vector< std::pair<int, int> > &v)
-	{
-		for (std::vector< std::pair<int, int> >::iterator it = v.begin();
-			it != v.end(); ++it)
-			std::cout << it->first << " ";
-		std::cout << std::endl;
-	}
-	
-	template <>
-	void	printContainer(std::deque< std::pair<int, int> > &v)
-	{
-		for (std::deque< std::pair<int, int> >::iterator it = v.begin();
-			it != v.end(); ++it)
-			std::cout << it->first << " ";
-		std::cout << std::endl;
-	}
-
 	template<typename T>
 	void	testing(T &pair, T &result)
 	{
@@ -97,7 +74,7 @@ public:
 	void		calculateJacobsthal(int n);
 	std::pair<int, int> findChildEle(std::deque< std::pair<int, int> >, int idx);
 };
-
+	
 template <typename T>
 void	PmergeMe::parseInput(char **argv, T &v)
 {
@@ -129,6 +106,32 @@ int	PmergeMe::binarySearch(T &insertV, int val, int jacobsthal)
 			high = mid - 1;
 	}
 	return low;
+}
+
+template <typename T>
+void	PmergeMe::printContainer(T &v)
+{
+	for (typename T::iterator it = v.begin(); it != v.end(); ++it)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+}
+	
+template <>
+inline void	PmergeMe::printContainer<>(std::vector< std::pair<int, int> > &v)
+{
+	for (std::vector< std::pair<int, int> >::iterator it = v.begin();
+		it != v.end(); ++it)
+		std::cout << it->first << " ";
+	std::cout << std::endl;
+}
+	
+template <>
+inline void	PmergeMe::printContainer<>(std::deque< std::pair<int, int> > &v)
+{
+	for (std::deque< std::pair<int, int> >::iterator it = v.begin();
+		it != v.end(); ++it)
+		std::cout << it->first << " ";
+	std::cout << std::endl;
 }
 
 #endif
