@@ -1,0 +1,35 @@
+In archive libasm.a:
+
+ft_strlen.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <ft_strlen>:
+   0:	48 31 c0             	xor    %rax,%rax
+
+0000000000000003 <ft_strlen.loop>:
+   3:	80 3c 07 00          	cmpb   $0x0,(%rdi,%rax,1)
+   7:	74 05                	je     e <ft_strlen.done>
+   9:	48 ff c0             	inc    %rax
+   c:	eb f5                	jmp    3 <ft_strlen.loop>
+
+000000000000000e <ft_strlen.done>:
+   e:	c3                   	ret
+
+ft_strcpy.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <ft_strcpy>:
+   0:	48 89 f8             	mov    %rdi,%rax
+
+0000000000000003 <ft_strcpy.loop>:
+   3:	8a 06                	mov    (%rsi),%al
+   5:	88 07                	mov    %al,(%rdi)
+   7:	48 ff c6             	inc    %rsi
+   a:	48 ff c7             	inc    %rdi
+   d:	84 c0                	test   %al,%al
+   f:	75 f2                	jne    3 <ft_strcpy.loop>
+  11:	c3                   	ret
