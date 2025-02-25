@@ -1,12 +1,28 @@
-section .text			; start of text section (or code section)
-	global ft_strlen	; declare label ft_strlen global so it can be accessed from anywhere
-
-ft_strlen:				; start of ft_strlen function
-	xor rax, rax 		; Clear RAX, use for counting length
-.loop:					; loop start
-	cmp byte [rdi + rax], 0	; compare byte at [rdi + rax] == *(str + i)
-	je .done				; jump if current equals null
-	inc rax					; increase value in rax
-	jmp .loop				; jump to start of loop
-.done:
-	ret
+section .text
+%ifdef WIN64
+    global ft_strlen
+    ft_strlen:
+        mov rax, rcx    ; Windows: rcx = string pointer
+        xor rdx, rdx    ; counter
+    .loop:
+        cmp byte [rax + rdx], 0
+        je .done
+        inc rdx
+        jmp .loop
+    .done:
+        mov rax, rdx    ; return length
+        ret
+%else
+    global _ft_strlen
+    _ft_strlen:
+        mov rax, rdi    ; macOS: rdi = string pointer
+        xor rcx, rcx    ; counter
+    .loop:
+        cmp byte [rax + rcx], 0
+        je .done
+        inc rcx
+        jmp .loop
+    .done:
+        mov rax, rcx    ; return length
+        ret
+%endif

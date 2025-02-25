@@ -3,20 +3,28 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: minsepar <minsepar@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/25 21:11:30 by minsepar          #+#    #+#              #
-#    Updated: 2025/02/23 20:24:04 by minsepar         ###   ########.fr        #
+#    Updated: 2025/02/25 22:51:48 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR = srcs
+
+SRC_BASE ?= $(SRC_DIR)
+
+# SRCS = ft_strlen_movedq.asm ft_strcpy.asm
+
+# SRCS = ft_strlen_xmm.asm ft_strcpy.asm
 
 SRCS = ft_strlen.asm ft_strcpy.asm
 
 OBJ_DIR = objs
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.asm=.o))
+
+OPT_SRC_DIR = optimized
 
 NAME = libasm.a
 
@@ -28,31 +36,54 @@ INCLUDES = includes
 
 # ASM_FLAGS = -f elf64 -O0
 
-ASM_FLAGS = -f elf64
+ifeq ($(OS),Windows_NT)
+    # Windows (Intel x86_64)
+	ASM_FLAGS = -f elf64
+else
+    # macOS (Intel x86_64)
+    ASM_FLAGS = -f macho64
+endif
 
-CFLAGS = -Wall -Wextra -Werror -z noexecstack
+
+#-z noexecstack is gcc only
+
+CFLAGS = -Wall -Wextra -Werror
 
 CC = cc
 
-ifeq ($(shell uname -m), arm64)
-    CC += -ld_classic --target=x86_64-apple-darwin
+ifeq ($(CC),gcc)
+    CFLAGS += -z noexecstack
+else
+	CFLAGS += -Wa,--noexecstack
 endif
 
-TEST_MAIN = tests/main.c
+TEST_SRC = tests/main.c tests/utils.c  tests/test_ft_strcpy.c tests/test_ft_strlen.c
 
 TEST_EXE = a.out
+
+GCC_SRC = gcc_optimized/main.c tests/utils.c
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
+$(OBJ_DIR)/%.o: $(SRC_BASE)/%.asm | $(OBJ_DIR)
 	nasm $(ASM_FLAGS) $< -o $@
 	
+# Optimized target: force SRC_BASE and rebuild
+opt: clean 
+	$(MAKE) SRC_BASE=$(OPT_SRC_DIR) all
+
+	
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
 test: $(NAME)
-	make re
-	$(CC) $(CFLAGS) -I $(INCLUDES) $(TEST_MAIN) $(NAME) -o $(TEST_EXE)
+	$(CC) $(CFLAGS) -I $(INCLUDES) $(TEST_SRC) $(NAME) -o $(TEST_EXE)
+
+gcc:
+	$(CC) $(CFLAGS) -I $(INCLUDES) $(GCC_SRC) -o gcc.out
 
 clean:
 	rm -f $(OBJS)
@@ -60,13 +91,13 @@ clean:
 	rm -f main.o
 
 fclean:
-	make clean
+	$(MAKE) clean
 	rm -f $(NAME)
 	rm -f $(NAME_BONUS)
 	rm -f $(TEST_EXE)
 
 re:
-	make fclean
-	make all
+	$(MAKE) fclean
+	$(MAKE) all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re opt
