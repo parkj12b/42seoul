@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 22:47:20 by minsepar          #+#    #+#             */
-/*   Updated: 2025/02/25 22:56:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:05:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	test_module_ft_strlen(void *arg)
 	timed_execution(test_ft_strlen, ((char *) arg + 1));
 	printf("strlen:\n");
 	timed_execution(test_strlen, ((char *) arg + 1));
-	ft_strlen(arg);
 	assert(ft_strlen(str) == strlen(str));
 	assert(ft_strlen("") == strlen(""));
 	assert(ft_strlen(arg) == strlen(arg));

@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/25 21:11:30 by minsepar          #+#    #+#              #
-#    Updated: 2025/02/25 22:51:48 by minsepar         ###   ########.fr        #
+#    Updated: 2025/02/27 22:43:57 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC_BASE ?= $(SRC_DIR)
 
 # SRCS = ft_strlen_xmm.asm ft_strcpy.asm
 
-SRCS = ft_strlen.asm ft_strcpy.asm
+SRCS = ft_strlen.asm ft_strcpy.asm ft_strcmp.asm ft_write.asm
 
 OBJ_DIR = objs
 
@@ -34,19 +34,12 @@ NAME_BONUS = libasm_bonus.a
 
 INCLUDES = includes
 
-# ASM_FLAGS = -f elf64 -O0
-
-which_os:
-	echo $(OS)
-
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O0
 
 CC = cc
 
-which_cc:
-	echo $(CC)
-
-TEST_SRC = tests/main.c tests/utils.c  tests/test_ft_strcpy.c tests/test_ft_strlen.c
+TEST_SRC = 	tests/main.c tests/utils.c  tests/test_ft_strcpy.c \
+			tests/test_ft_strlen.c tests/test_ft_strcmp.c
 
 TEST_EXE = a.out
 
@@ -61,6 +54,12 @@ else ifeq ($(OS),Darwin)
 endif
 
 all: $(NAME)
+
+which_os:
+	echo $(OS)
+
+which_cc:
+	echo $(CC)
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
@@ -97,4 +96,4 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
-.PHONY: all clean fclean re opt
+.PHONY: all clean fclean re opt test

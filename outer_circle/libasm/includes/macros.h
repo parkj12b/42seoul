@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 23:49:48 by minsepar          #+#    #+#             */
-/*   Updated: 2025/02/25 22:43:36 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:54:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef void (*func_ptr)(void *arg);
 # define GREEN "\033[32m"
 # define RESET "\033[0m"
 
-# define TEST_LEN 10000000 //100,000,000
+# define TEST_LEN 4096 //100,000,000
 
 # define TEST_BEGIN fprintf(stderr, "Running tests...\n")
 # define TEST_FN fprintf(stderr, "Testing %s \n", __func__)

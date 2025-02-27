@@ -5,42 +5,45 @@
     global _ft_strlen
     _ft_strlen:
 %endif
-    mov rax, rdi        ; macOS: string pointer in rdi
-    vpxor ymm0, ymm0, ymm0  ; Zero out ymm0 for null comparison (AVX)
-    mov r8, rax             ; Save original pointer
+    mov rax, rdi            ; String pointer to rax
+    vpxor ymm0, ymm0, ymm0  ; Zero ymm0 for null comparison
+    mov r8, rax             ; Save start for length calc
 
-    ; Check alignment (32-byte boundary for YMM)
-    test rax, 0x1F          ; Check if aligned to 32 bytes
-    jz .aligned_start       ; If aligned, jump to aligned part
+    ; Compute previous 32-byte aligned address
+    mov r9, rax             ; Copy original pointer
+    and r9, ~0x1F           ; Align down to 32-byte boundary (e.g., 0xFFFFFFE0)
+    sub rax, r9             ; Offset from aligned start (0-31)
 
-    ; Handle unaligned first part (up to 31 bytes)
-    mov r9, rax             ; Save original start address
-    vmovdqu ymm1, [rax]     ; Load 32 bytes from original start (unaligned)
-    vpcmpeqb ymm1, ymm1, ymm0 ; Compare with 0 (AVX2)
+    ; Initial load from aligned address
+    vmovdqu ymm1, [r9]      ; Load 32 bytes from aligned address
+    vpcmpeqb ymm1, ymm1, ymm0 ; Compare with zero
     vpmovmskb ecx, ymm1     ; Get 32-bit mask
-    test ecx, ecx           ; Any nulls?
-    jnz .found_null         ; If yes, calculate length
-    and rax, 0xFFFFFFE0     ; Align to 32-byte boundary
-    add rax, 32             ; Move to next chunk
-    jmp .aligned_loop
 
-.aligned_start:
-    ; If already aligned, no need to realign (test rax, 0x1F ensures this)
-    ; and rax, 0xFFFFFFE0    ; (Commented out - unnecessary)
+    ; Mask off bytes before the string start
+    mov edx, 0xFFFFFFFF     ; Full 32-bit mask
+    mov cl, al              ; Offset into cl for shift
+    shl edx, cl             ; Shift left by offset (ignore bytes before start)
+    and ecx, edx            ; Mask out bytes before string start
+    mov rax, r9             ; for the initial address setup
+    test ecx, ecx           ; Null in valid part?
+    jnz .found_null         ; If yes, compute length
 
-.aligned_loop:
+    ; Move to next 32-byte chunk
+    add r9, 32              ; Next aligned chunk
+    mov rax, r9             ; Update rax for loop
+
 .loop:
-    vmovdqu ymm1, [rax]     ; Load 32 bytes (unaligned OK with vmovdqu)
-    vpcmpeqb ymm1, ymm1, ymm0 ; Compare each byte with 0 (AVX2)
-    vpmovmskb ecx, ymm1     ; Extract 32-bit mask
-    test ecx, ecx           ; Any nulls?
-    jnz .found_null         ; If yes, calculate position
-    add rax, 32             ; Move to next 32-byte chunk
+    vmovdqu ymm1, [rax]     ; Load 32 bytes (aligned)
+    vpcmpeqb ymm1, ymm1, ymm0 ; Compare with zero
+    vpmovmskb ecx, ymm1     ; Get mask
+    test ecx, ecx           ; Null found?
+    jnz .found_null         ; If yes, compute length
+    add rax, 32             ; Next aligned chunk
     jmp .loop
 
 .found_null:
-    bsf ecx, ecx            ; Find index of first null in mask (0-31)
-    sub rax, r8             ; Current position - start
-    add rax, rcx            ; Add offset of null within chunk
-    vzeroupper              ; Clean up YMM state (good practice)
+    bsf ecx, ecx            ; Index of first null in mask
+    sub rax, r8             ; Current pos - start
+    add rax, rcx            ; Add null offset
+    vzeroupper              ; Clean up AVX state
     ret
