@@ -10,6 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
+OS := $(shell uname -s)
+
 SRC_DIR = srcs
 
 SRC_BASE ?= $(SRC_DIR)
@@ -30,38 +32,33 @@ NAME = libasm.a
 
 NAME_BONUS = libasm_bonus.a
 
-ASM = NAME_BONUS
-
 INCLUDES = includes
 
 # ASM_FLAGS = -f elf64 -O0
 
-ifeq ($(OS),Windows_NT)
-    # Windows (Intel x86_64)
-	ASM_FLAGS = -f elf64
-else
-    # macOS (Intel x86_64)
-    ASM_FLAGS = -f macho64
-endif
-
-
-#-z noexecstack is gcc only
+which_os:
+	echo $(OS)
 
 CFLAGS = -Wall -Wextra -Werror
 
 CC = cc
 
-ifeq ($(CC),gcc)
-    CFLAGS += -z noexecstack
-else
-	CFLAGS += -Wa,--noexecstack
-endif
+which_cc:
+	echo $(CC)
 
 TEST_SRC = tests/main.c tests/utils.c  tests/test_ft_strcpy.c tests/test_ft_strlen.c
 
 TEST_EXE = a.out
 
 GCC_SRC = gcc_optimized/main.c tests/utils.c
+
+ifeq ($(OS),Linux)
+    ASM_FLAGS = -f elf64 -D OS_LINUX
+    CFLAGS += -z noexecstack
+else ifeq ($(OS),Darwin)
+    ASM_FLAGS = -f macho64 -D OS_MACOS
+	CFLAGS += -Wa,--noexecstack
+endif
 
 all: $(NAME)
 

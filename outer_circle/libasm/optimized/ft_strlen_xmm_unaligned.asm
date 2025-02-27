@@ -1,14 +1,13 @@
 section .text
 
-%ifdef WIN64
+%ifdef OS_LINUX
     global ft_strlen
     ft_strlen:
-        mov rax, rcx        ; Windows: string pointer in rcx
 %else
     global _ft_strlen
     _ft_strlen:
-        mov rax, rdi        ; macOS: string pointer in rdi
 %endif
+    mov rax, rdi        ; macOS: string pointer in rdi
 
     ; Save original pointer for length calculation
     mov r8, rax

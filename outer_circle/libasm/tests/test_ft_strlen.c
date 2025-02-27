@@ -18,7 +18,7 @@
 #include "utils.h"
 
 static void test_strlen(void *arg) {
-	strlen(arg);
+	(void) strlen(arg);
 }
 
 static void	test_ft_strlen(void *arg)
@@ -29,7 +29,7 @@ static void	test_ft_strlen(void *arg)
 void	test_module_ft_strlen(void *arg)
 {
 	static char	*str = "Hello, World!";
-	
+
 	printf("ft_strlen:\n");
 	timed_execution(test_ft_strlen, ((char *) arg + 1));
 	printf("strlen:\n");

@@ -1,12 +1,11 @@
-%ifdef WIN64
+%ifdef OS_LINUX
     global ft_strlen
     ft_strlen:
-        mov rax, rcx        ; Windows: string pointer in rcx
 %else
     global _ft_strlen
     _ft_strlen:
-        mov rax, rdi        ; macOS: string pointer in rdi
 %endif
+    mov rax, rdi        ; macOS: string pointer in rdi
     vpxor ymm0, ymm0, ymm0  ; Zero out ymm0 for null comparison (AVX)
     mov r8, rax             ; Save original pointer
 
