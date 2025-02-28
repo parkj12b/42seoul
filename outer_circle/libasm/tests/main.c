@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 23:47:32 by minsepar          #+#    #+#             */
-/*   Updated: 2025/02/27 22:54:09 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:24:54 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 #include "libasm.h"
 #include <errno.h>
+#include <fcntl.h>
 
 int	main(void)
 {
@@ -38,11 +39,8 @@ int	main(void)
 	test_module_ft_strlen((page + 4094));
 	test_module_ft_strcpy();
 	test_module_ft_strcmp();
-	
-	char *str = "hello world!";
-
-	printf("%zd\n", ft_write(1, NULL, strlen(str)));
-	printf("%d\n", errno);
+	test_module_ft_write();
+	test_module_ft_read();
 
 	return (0);
 }

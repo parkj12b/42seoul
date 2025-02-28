@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/25 21:11:30 by minsepar          #+#    #+#              #
-#    Updated: 2025/02/28 16:34:35 by minsepar         ###   ########.fr        #
+#    Updated: 2025/02/28 18:24:41 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC_BASE ?= $(SRC_DIR)
 
 # SRCS = ft_strlen_xmm.asm ft_strcpy.asm
 
-SRCS = ft_strlen.asm ft_strcpy.asm ft_strcmp.asm ft_write.asm
+SRCS = 	ft_strlen.asm ft_strcpy.asm ft_strcmp.asm ft_write.asm ft_read.asm \
+		
 
 OBJ_DIR = objs
 
@@ -39,7 +40,9 @@ CFLAGS = -Wall -Wextra -Werror -lc
 CC = cc
 
 TEST_SRC = 	tests/main.c tests/utils.c  tests/test_ft_strcpy.c \
-			tests/test_ft_strlen.c tests/test_ft_strcmp.c
+			tests/test_ft_strlen.c tests/test_ft_strcmp.c \
+			tests/test_ft_write.c tests/test_ft_read.c
+			
 
 TEST_EXE = a.out
 

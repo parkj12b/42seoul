@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 22:41:57 by minsepar          #+#    #+#             */
-/*   Updated: 2025/02/27 21:15:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:24:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,7 @@
 void    test_module_ft_strlen(void *arg);
 void    test_module_ft_strcpy(void);
 void    test_module_ft_strcmp(void);
+void    test_module_ft_write(void);
+void    test_module_ft_read(void);
 
 #endif
