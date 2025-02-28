@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/25 21:11:30 by minsepar          #+#    #+#              #
-#    Updated: 2025/02/28 16:00:07 by minsepar         ###   ########.fr        #
+#    Updated: 2025/02/28 16:34:35 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_BASE)/%.asm | $(OBJ_DIR)
-	nasm $(ASM_FLAGS) $< -o $@
+	nasm -g $(ASM_FLAGS) $< -o $@
 	
 # Optimized target: force SRC_BASE and rebuild
 opt: clean 
@@ -76,7 +76,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 test: $(NAME)
-	$(CC) $(CFLAGS) -I $(INCLUDES) $(TEST_SRC) $(NAME) -o $(TEST_EXE)
+	$(CC) -g $(CFLAGS) -I $(INCLUDES) $(TEST_SRC) $(NAME) -o $(TEST_EXE)
 
 gcc:
 	$(CC) $(CFLAGS) -I $(INCLUDES) $(GCC_SRC) -o gcc.out
