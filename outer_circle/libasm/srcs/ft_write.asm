@@ -20,7 +20,7 @@ section .text
     neg rax
     mov r8, rax
     %ifdef OS_LINUX
-        call __errno_location
+        call __errno_location wrt ..plt
     %else
         call ___error
     %endif
