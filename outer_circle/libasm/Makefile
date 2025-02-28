@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/25 21:11:30 by minsepar          #+#    #+#              #
-#    Updated: 2025/02/27 22:43:57 by minsepar         ###   ########.fr        #
+#    Updated: 2025/02/28 16:00:07 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ NAME_BONUS = libasm_bonus.a
 
 INCLUDES = includes
 
-CFLAGS = -Wall -Wextra -Werror -O0
+CFLAGS = -Wall -Wextra -Werror -lc
 
 CC = cc
 

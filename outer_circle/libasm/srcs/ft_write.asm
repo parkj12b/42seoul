@@ -1,10 +1,11 @@
 section .text
-extern __errno_location
 %ifdef OS_LINUX
+    extern __errno_location
     global ft_write
     ft_write:
         mov rax, 1
 %else
+    extern ___error
     global _ft_write
     _ft_write:
         mov rax, 0x2000004  ; rdi = fd, rsi = buf, rdx = count
@@ -18,7 +19,11 @@ extern __errno_location
 .error:
     neg rax
     mov r8, rax
-    call __errno_location
+    %ifdef OS_LINUX
+        call __errno_location
+    %else
+        call ___error
+    %endif
     mov [rax], r8
 
     mov rax, -1 ; return -1 on error
