@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 23:47:32 by minsepar          #+#    #+#             */
-/*   Updated: 2025/02/28 18:24:54 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/02/28 22:26:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int	main(void)
 	test_module_ft_strcmp();
 	test_module_ft_write();
 	test_module_ft_read();
+	test_ft_isspace();
+
+	ft_atoi_base("    abc", "0");
 
 	return (0);
 }
