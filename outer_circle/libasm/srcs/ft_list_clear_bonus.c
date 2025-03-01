@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libasm.h                                           :+:      :+:    :+:   */
+/*   free_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 21:13:48 by minsepar          #+#    #+#             */
-/*   Updated: 2025/03/01 20:04:03 by minsepar         ###   ########.fr       */
+/*   Created: 2025/03/01 20:04:39 by minsepar          #+#    #+#             */
+/*   Updated: 2025/03/01 20:04:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBASM_H
-# define LIBASM_H
+#include "libasm_bonus.h"
 
-# include <stdlib.h>
-# include <sys/types.h>
+void	ft_list_clear(t_list *begin_list, void (*free_fct)(void *))
+{
+	t_list	*next;
 
-/* mandatory */
-
-size_t	ft_strlen(const char *s);
-char	*ft_strcpy(char *restrict dst, const char *restrict src);
-int		ft_strcmp(const char *s1, const char *s2);
-ssize_t ft_write(int fd, const void *buf, size_t count);
-ssize_t ft_read(int fd, void *buf, size_t count);
-char    *ft_strdup(const char *s);
-
-#endif
+	while (begin_list && begin_list != 0)
+	{
+		next = begin_list->next;
+		free_fct(begin_list->data);
+		free(begin_list);
+		begin_list = next;
+	}
+}
