@@ -28,8 +28,6 @@ _ft_list_sort:
     ; Outer loop: number of passes = size - 1
     dec     rax                     ; rax = size - 1
     mov     [rbp - 8], rax          ; Store passes in [rbp - 8]
-    xor     rax, rax
-    mov     [rbp - 16], rax
 
 .outer_loop:
     cmp     qword [rbp - 8], 0      ; If passes <= 0, sorting is done
@@ -39,11 +37,16 @@ _ft_list_sort:
     mov     r14, r12                ; r14 = prev = &begin_list
     mov     r15, [r12]              ; r15 = cur = *begin_list
     mov     rbx, [r15 + 8]          ; rbx = next = cur->next
+    mov     rax, -1
+    mov     [rbp - 16], rax
 
     ; Inner loop: traverse and swap adjacent nodes
 .inner_loop:
-    test    rbx, rbx                ; If next is null, end inner loop
-    jz      .inner_done
+    mov     rax, [rbp - 16]
+    inc     rax
+    cmp     rax, [rbp - 8]
+    jge      .inner_done
+    mov     [rbp - 16], rax
 
     ; Compare cur->data and next->data
     mov     rdi, [r15]              ; rdi = cur->data
@@ -91,9 +94,10 @@ _ft_list_sort:
     jmp     .outer_loop
 
 .done:
+    mov     rdi, r12
     pop     r15
     pop     r14
-    pop    r13
+    pop     r13
     pop     r12
     pop     rbx
     leave

@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/25 21:11:30 by minsepar          #+#    #+#              #
-#    Updated: 2025/03/02 22:44:21 by minsepar         ###   ########.fr        #
+#    Updated: 2025/03/03 01:07:09 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS = 	ft_strlen.asm ft_strcpy.asm ft_strcmp.asm ft_write.asm ft_read.asm \
 
 BONUS_SRCS =	ft_atoi_base_bonus.asm ft_create_elem_bonus.asm \
 				ft_list_push_front_bonus.asm ft_list_size_bonus.asm	\
-				ft_list_sort_bonus.asm
+				ft_list_sort_bonus.asm ft_list_remove_if.asm
 
 C_SRCS =		ft_list_clear_bonus.c
 

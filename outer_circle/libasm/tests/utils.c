@@ -14,7 +14,7 @@ void	timed_execution(func_ptr func, void *arg)
 	func(arg);
 	end = clock();
 	time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-	printf("Time taken: %f seconds\n\n", time_spent);
+	PRINT(printf("Time taken: %f seconds\n\n", time_spent););
 }
 
 void    test_ft_isspace() {

@@ -40,7 +40,7 @@ void test_read_invalid_fd() {
 void test_read_stdin_blocking() {
     errno = 0;
     char buf[10] = {0};
-    printf("Enter up to 5 chars for stdin (then Enter): \n");
+    PRINT(printf("Enter up to 5 chars for stdin (then Enter): \n"););
     ssize_t ret = ft_read(0, buf, 5);
     //"\nTest 5 - Read from stdin: ret = %zd, buf = '%s', errno = %d\n", ret, buf, errno
     assert(ret >= 0 && ret <= 5 && "Expected 0-5 bytes read");

@@ -1,99 +1,103 @@
 section .text
 global _ft_list_remove_if
-extern _ft_list_size
+extern _free
 _ft_list_remove_if:
     section .text
 
-; void ft_list_sort(t_list **begin_list, int (*cmp)())
+; void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
+;   void (*free_fc)(void *))
 _ft_list_sort:
     push    rbp
     mov     rbp, rsp
-    sub     rsp, 16                 ; Space for local variables
+    sub     rsp, 16
     push    rbx
     push    r12
     push    r13
     push    r14
     push    r15
 
-    ; Save arguments
-    mov     r12, rdi                ; r12 = begin_list (t_list **)
-    mov     r13, rsi                ; r13 = cmp function pointer
 
-    ; Check if list is empty or has one node
-    mov     rdi, [r12]              ; rdi = *begin_list
-    test    rdi, rdi                ; If list is empty, exit
+    mov     [rbp - 8], rdi      ; begin_list
+    mov     r13, rsi            ; data_ref
+    mov     r14, rdx            ; cmp function
+    mov     r15, rcx            ; free function
+
+    mov     rbx, rdi            ; rbx = prev
+
+; first iteration as exception
+; compare data
+.begin_list:
+    ; test cur = NULL
+    mov     rdi, [rbx]          ; rax = *begin_list
+    test    rdi, rdi
     jz      .done
-    call    _ft_list_size           ; rax = list size
-    cmp     rax, 1                  ; If size <= 1, no sorting needed
-    jle     .done
 
-    ; Outer loop: number of passes = size - 1
-    dec     rax                     ; rax = size - 1
-    mov     [rbp - 8], rax          ; Store passes in [rbp - 8]
+    ; perform comparison
+    mov     rdi, [rdi]
+    mov     rsi, r13
+    call    r14
+    jnz    .first_loop                ; jump out of begin_list if not eql
 
-.outer_loop:
-    cmp     qword [rbp - 8], 0      ; If passes <= 0, sorting is done
-    jle     .done
+    ; free data
+    mov     rdi, [rbx]
+    mov     rdi, [rdi]
+    call    r15
 
-    ; Initialize pointers for inner loop
-    mov     r14, r12                ; r14 = prev = &begin_list
-    mov     r15, [r12]              ; r15 = cur = *begin_list
-    mov     rbx, [r15 + 8]          ; rbx = next = cur->next
+    ; free t_list *
+    mov     rdi, [rbx]          ; store first elem
+    push    qword [rdi + 8]         ; store next in stack
+    call    _free
 
-    ; Inner loop: traverse and swap adjacent nodes
-.inner_loop:
-    test    rbx, rbx                ; If next is null, end inner loop
-    jz      .inner_done
+    ; connect prev and next
+    pop     rax
+    mov     [rbx], rax
+    jmp     .begin_list
 
-    ; Compare cur->data and next->data
-    mov     rdi, [r15]              ; rdi = cur->data
-    mov     rsi, [rbx]              ; rsi = next->data
-    call    r13                     ; Call cmp function
-    test    eax, eax                ; If cmp <= 0, no swap needed
-    jle     .no_swap
+.first_loop:
+    mov     rbx, [rbx]          ; make first elem prev
 
-    ; Swap nodes: check if cur is the head
-    cmp     r15, [r12]              ; Is cur the head?
-    je      .swap_head
+.loop:
+    mov     rax, [rbx + 8]      ; store cur in rax
+    
+    ; test if cur is null
+    test    rax, rax
+    jz      .done
 
-    ; Normal swap (not head)
-    mov     rax, [rbx + 8]          ; rax = next->next
-    mov     [r15 + 8], rax          ; cur->next = next->next
-    mov     [r14 + 8], rbx          ; prev->next = next
-    mov     [rbx + 8], r15          ; next->next = cur
+    ; test data equality
+    mov     rdi, [rax]
+    mov     rsi, r13
+    call    r14
+    jnz     .move_pointer
 
-    ; Update pointers after swap
-    mov     r14, rbx                ; prev = next
-    mov     r15, rbx                ; cur = next
-    mov     rbx, [r15 + 8]          ; next = cur->next
-    jmp     .inner_loop
+    mov     rax, [rbx + 8]      ; set current back in rax
+    mov     rdi, [rax]
+    call    r15
 
-.swap_head:
-    mov     rax, [rbx + 8]          ; rax = next->next
-    mov     [r15 + 8], rax          ; cur->next = next->next
-    mov     [r12], rbx              ; *begin_list = next
-    mov     [rbx + 8], r15          ; next->next = cur
+    mov     rdi, [rbx + 8]      ; store current t_list in rdi
+    push    qword [rsi + 8]           ; store next in stack
+    call    _free
 
-    ; Update pointers after head swap
-    mov     r14, rbx                ; prev = next (head)
-    mov     rbx, [r15 + 8]          ; next = cur->next
-    jmp     .inner_loop
+    ; connect prev and next
+    pop     rax
+    mov     [rbx + 8], rax
+    jmp     .loop
 
-.no_swap:
-    ; Advance pointers without swapping
-    mov     r14, r15                ; prev = cur
-    mov     r15, rbx                ; cur = next
-    mov     rbx, [r15 + 8]          ; next = next->next
-    jmp     .inner_loop
+.move_pointer:
+    mov     rbx, [rbx + 8]
+    jmp     .loop
 
-.inner_done:
-    dec     qword [rbp - 8]         ; Decrement passes
-    jmp     .outer_loop
+
+.free_data:
+    mov     rdi, [rax]
+    call    r15
+
+    mov     rax, [rbx]
 
 .done:
+    mov     rdi, [rbp - 8]
     pop     r15
     pop     r14
-    pop    r13
+    pop     r13
     pop     r12
     pop     rbx
     leave

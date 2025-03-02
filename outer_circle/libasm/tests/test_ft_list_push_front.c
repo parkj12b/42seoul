@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:54:10 by minsepar          #+#    #+#             */
-/*   Updated: 2025/03/02 17:31:10 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/03/03 00:00:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void    test_module_ft_list_push_front(void)
     int data1 = 42;
     ft_list_push_front(&list1, &data1);
     assert(list1 != NULL);                  // Check allocation
-    printf("%d\n", *((int *)(list1->data)));
+    PRINT(printf("%d\n", *((int *)(list1->data))););
     assert(list1->data == &data1);          // Check data
     assert(list1->next == NULL);            // Check next
     ft_list_clear(list1, do_nothing);
