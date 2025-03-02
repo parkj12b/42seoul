@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 23:47:32 by minsepar          #+#    #+#             */
-/*   Updated: 2025/03/01 21:37:28 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/03/02 22:45:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include <sys/mman.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <time.h>
+#include <fcntl.h>
 #include "macros.h"
 #include "test_modules.h"
+#include "libasm_bonus.h"
+#include "utils.h"
 
-#include "libasm.h"
-#include <errno.h>
-#include <fcntl.h>
+
+#include <string.h>
 
 void    leaks()
 {
@@ -50,6 +50,9 @@ int	main(void)
 	test_module_ft_atoi_base();
 	test_ft_create_elem();
     test_module_ft_list_push_front();
+	test_module_ft_list_size();
+	test_module_ft_list_sort();
+	
 
 	return (0);
 }

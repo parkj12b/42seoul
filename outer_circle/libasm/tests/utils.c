@@ -4,6 +4,7 @@
 #include "macros.h"
 #include "utils.h"
 
+
 void	timed_execution(func_ptr func, void *arg)
 {
 	clock_t	start, end;
@@ -39,4 +40,9 @@ void    test_ft_isspace() {
     }
 
     TEST_SUCCESS;
+}
+
+void    do_nothing(void *p)
+{
+    (void) p;
 }

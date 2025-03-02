@@ -6,19 +6,14 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 19:54:10 by minsepar          #+#    #+#             */
-/*   Updated: 2025/03/01 22:17:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:31:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <assert.h>
 #include "libasm_bonus.h"
 #include "macros.h"
-#include <stdio.h>
-
-void    do_nothing(void *p)
-{
-    (void) p;
-}
+#include "utils.h"
 
 void    test_module_ft_list_push_front(void)
 {

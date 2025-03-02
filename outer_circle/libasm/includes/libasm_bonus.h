@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 21:13:48 by minsepar          #+#    #+#             */
-/*   Updated: 2025/03/01 20:07:03 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:35:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct  s_list
 /* bonus */
 int     ft_atoi_base(char *str, char *base);
 void    ft_list_push_front(t_list **begin_list, void *data);
+int     ft_list_size(t_list *begin_list);
+void    ft_list_sort(t_list **begin_list, int (*cmp)());
 
 /* helper */
 t_list  *ft_create_elem(void *data);
