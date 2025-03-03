@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "libasm_bonus.h"
 #include "macros.h"
 #include "utils.h"
 
 // Test Case 1: Empty List
-void test_empty_list(void)
+static void test_empty_list(void)
 {
     t_list *begin = NULL;
     PRINT(printf("Testing empty list:\n"););
@@ -22,9 +23,10 @@ void test_empty_list(void)
 }
 
 // Test Case 2: Single Element
-void test_single_element(void)
+static void test_single_element(void)
 {
     t_list *begin = ft_create_elem("42");
+
     PRINT(printf("Testing single element:\n"););
     ft_list_sort(&begin, strcmp);
     PRINT(printf("Element: %s\n\n", (char *)begin->data););
@@ -32,15 +34,17 @@ void test_single_element(void)
 }
 
 // Test Case 3: Two Elements (Already Sorted)
-void test_two_sorted(void)
+static void test_two_sorted(void)
 {
     t_list *begin = ft_create_elem("1");
     begin->next = ft_create_elem("2");
     PRINT(printf("Testing two sorted elements:\n"););
     ft_list_sort(&begin, strcmp);
     t_list *temp = begin;
+    int i = 0;
     while (temp)
     {
+        i++;
         PRINT(printf("%s\n", (char *)temp->data););
         temp = temp->next;
     }
@@ -49,16 +53,19 @@ void test_two_sorted(void)
 }
 
 // Test Case 4: Two Elements (Reverse Order)
-void test_two_reverse(void)
+static void test_two_reverse(void)
 {
     t_list *begin = ft_create_elem("2");
     begin->next = ft_create_elem("1");
     PRINT(printf("Testing two reverse elements:\n"););
     ft_list_sort(&begin, strcmp);
     t_list *temp = begin;
+    int i = 0;
     while (temp)
     {
+        i++;
         PRINT(printf("%s\n", (char *)temp->data););
+        assert(('0' + i) == (int)(*(char *)temp->data));
         temp = temp->next;
     }
     PRINT(printf("\n"););
@@ -66,7 +73,7 @@ void test_two_reverse(void)
 }
 
 // Test Case 5: All Equal Elements
-void test_all_equal(void)
+static void test_all_equal(void)
 {
     t_list *begin = ft_create_elem("5");
     begin->next = ft_create_elem("5");
@@ -79,6 +86,7 @@ void test_all_equal(void)
     {
         i++;
         PRINT(printf("Node %d: %s\n", i, (char *)temp->data););
+        assert(('0' + 5) == (int)(*(char *)temp->data));
         temp = temp->next;
     }
     PRINT(printf("\n"););
@@ -86,7 +94,7 @@ void test_all_equal(void)
 }
 
 // Original Test Case: Random Order (5 elements)
-void test_random_order(void)
+static void test_random_order(void)
 {
     t_list *begin = ft_create_elem("2");
     begin->next = ft_create_elem("1");
@@ -108,11 +116,11 @@ void test_random_order(void)
 }
 
 // Test Case 6: Large Sorted List
-void test_large_sorted(void)
+static void test_large_sorted(void)
 {
     t_list *begin = ft_create_elem(strdup("1"));
     t_list *temp = begin;
-    for (int i = 2; i <= 10; i++)
+    for (int i = 2; i <= 9; i++)
     {
         char str[3];
         PRINT(sprintf(str, "%d", i););
@@ -127,6 +135,7 @@ void test_large_sorted(void)
     {
         i++;
         PRINT(printf("Node %d: %s\n", i, (char *)temp->data););
+        assert(('0' + i) == (int)(*(char *)temp->data));
         temp = temp->next;
     }
     PRINT(printf("\n"););
@@ -134,11 +143,11 @@ void test_large_sorted(void)
 }
 
 // Test Case 7: Large Reverse Order
-void test_large_reverse(void)
+static void test_large_reverse(void)
 {
-    t_list *begin = ft_create_elem(strdup("10"));
+    t_list *begin = ft_create_elem(strdup("9"));
     t_list *temp = begin;
-    for (int i = 9; i >= 1; i--)
+    for (int i = 8; i >= 1; i--)
     {
         char str[3];
         PRINT(sprintf(str, "%d", i););
@@ -153,6 +162,7 @@ void test_large_reverse(void)
     {
         i++;
         PRINT(printf("Node %d: %s\n", i, (char *)temp->data););
+        assert(('0' + i) == (int)(*(char *)temp->data));
         temp = temp->next;
     }
     PRINT(printf("\n"););

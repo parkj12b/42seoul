@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/25 21:11:30 by minsepar          #+#    #+#              #
-#    Updated: 2025/03/03 01:07:09 by minsepar         ###   ########.fr        #
+#    Updated: 2025/03/03 18:10:45 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,6 @@ OS := $(shell uname -s)
 SRC_DIR = srcs
 
 SRC_BASE ?= $(SRC_DIR)
-
-# SRCS = ft_strlen_movedq.asm ft_strcpy.asm
-
-# SRCS = ft_strlen_xmm.asm ft_strcpy.asm
 
 SRCS = 	ft_strlen.asm ft_strcpy.asm ft_strcmp.asm ft_write.asm ft_read.asm \
 		ft_strdup.asm ft_isspace.asm \
@@ -54,7 +50,7 @@ TEST_SRC = 	tests/utils.c  tests/test_ft_strcpy.c \
 			
 TEST_BONUS_SRC =	tests/test_ft_atoi_base.c tests/test_ft_create_elem.c \
 					tests/test_ft_list_push_front.c tests/test_ft_list_size.c \
-					tests/test_ft_list_sort.c
+					tests/test_ft_list_sort.c tests/test_ft_list_remove_if.c
 
 TEST_EXE = a.out
 
@@ -104,11 +100,7 @@ $(OBJ_DIR):
 test: $(NAME)
 	$(CC) -g $(CFLAGS) -I $(INCLUDES) $(TEST_SRCS) $(NAME) -o $(TEST_EXE)
 
-gcc:
-	$(CC) $(CFLAGS) -I $(INCLUDES) $(GCC_SRC) -o gcc.out
-
 clean:
-#	rm -f $(OBJS) $(C_OBJS) $(BONUS_OBJS)
 	rm -f $(OBJ_DIR)/*
 	rm -f main.o
 
@@ -116,6 +108,7 @@ fclean:
 	$(MAKE) clean
 	rm -f $(NAME)
 	rm -f $(TEST_EXE)
+	rm -rf a.out.dSYM
 
 re:
 	$(MAKE) fclean

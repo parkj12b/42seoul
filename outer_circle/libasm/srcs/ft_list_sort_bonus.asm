@@ -65,11 +65,7 @@ _ft_list_sort:
     mov     [r14 + 8], rbx          ; prev->next = next
     mov     [rbx + 8], r15          ; next->next = cur
 
-    ; Update pointers after swap
-    mov     r14, rbx                ; prev = next
-    mov     r15, rbx                ; cur = next
-    mov     rbx, [r15 + 8]          ; next = cur->next
-    jmp     .inner_loop
+    jmp     .update_ptr
 
 .swap_head:
     mov     rax, [rbx + 8]          ; rax = next->next
@@ -77,6 +73,8 @@ _ft_list_sort:
     mov     [r12], rbx              ; *begin_list = next
     mov     [rbx + 8], r15          ; next->next = cur
 
+
+.update_ptr:
     ; Update pointers after head swap
     mov     r14, rbx                ; prev = next (head)
     mov     rbx, [r15 + 8]          ; next = cur->next
@@ -86,7 +84,7 @@ _ft_list_sort:
     ; Advance pointers without swapping
     mov     r14, r15                ; prev = cur
     mov     r15, rbx                ; cur = next
-    mov     rbx, [r15 + 8]          ; next = next->next
+    mov     rbx, [r15 + 8]          ; next = cur->next
     jmp     .inner_loop
 
 .inner_done:

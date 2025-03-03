@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 17:40:17 by minsepar          #+#    #+#             */
-/*   Updated: 2025/03/01 20:05:10 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:54:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void    test_module_ft_atoi_base(void)
 {
+    printf("%d\n", ft_atoi_base("42","0123456789"));
     assert(ft_atoi_base("42", "0123456789") == 42);              // Basic Positive
     assert(ft_atoi_base("-42", "0123456789") == -42);            // Negative Number
     assert(ft_atoi_base("   123", "0123456789") == 123);        // Leading Whitespace

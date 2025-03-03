@@ -2,11 +2,8 @@ section .text
 global _ft_list_remove_if
 extern _free
 _ft_list_remove_if:
-    section .text
-
 ; void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
 ;   void (*free_fc)(void *))
-_ft_list_sort:
     push    rbp
     mov     rbp, rsp
     sub     rsp, 16
@@ -33,7 +30,7 @@ _ft_list_sort:
     jz      .done
 
     ; perform comparison
-    mov     rdi, [rdi]
+    mov     rdi, [rdi]          
     mov     rsi, r13
     call    r14
     jnz    .first_loop                ; jump out of begin_list if not eql
@@ -74,7 +71,7 @@ _ft_list_sort:
     call    r15
 
     mov     rdi, [rbx + 8]      ; store current t_list in rdi
-    push    qword [rsi + 8]           ; store next in stack
+    push    qword [rdi + 8]           ; store next in stack
     call    _free
 
     ; connect prev and next
@@ -85,13 +82,6 @@ _ft_list_sort:
 .move_pointer:
     mov     rbx, [rbx + 8]
     jmp     .loop
-
-
-.free_data:
-    mov     rdi, [rax]
-    call    r15
-
-    mov     rax, [rbx]
 
 .done:
     mov     rdi, [rbp - 8]
