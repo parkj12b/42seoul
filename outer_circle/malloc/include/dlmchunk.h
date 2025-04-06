@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 22:33:48 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/06 18:02:57 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/07 00:08:57 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ static inline t_mchunk* next_chunk(t_mchunk *chunk) {
 static inline int this_chunk_inuse(t_mchunk *chunk) {
     t_mchunk *next = next_chunk(chunk);
     return next->size & PREV_INUSE;
+}
+
+static inline void  set_chunk_size(t_mchunk *chunk, size_t size) {
+    chunk->size = (chunk->size & PREV_INUSE) | size;
 }
 
 #endif

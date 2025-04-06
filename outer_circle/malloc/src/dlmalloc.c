@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:50:58 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/06 23:02:22 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/07 00:03:17 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void *sys_alloc(size_t size) {
  */
 static t_mchunk *split_chunk(t_mchunk *chunk, size_t size) {
     size_t next_chunk_size = chunk_size(chunk) - size;
-    chunk->size = size;
+    set_chunk_size(chunk, size);
     
     t_mchunk    *next = next_chunk(chunk);
-    next->size = next_chunk_size;
+    set_chunk_size(next, next_chunk_size);
     next->prev_size = chunk_size(chunk);
     set_prev_inuse(next);
     insert_chunk(next);

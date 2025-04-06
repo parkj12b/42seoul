@@ -6,11 +6,13 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:36:40 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/06 23:07:28 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/06 23:33:13 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dlmalloc.h"
+#include "globals.h"
+#include "bins.h"
 
 void    init_bin(t_mchunk *bin) {
     bin->free_data.fd = bin;
@@ -22,6 +24,10 @@ void    unlink_chunk(t_mchunk *node) {
     t_mchunk *bk = node->free_data.bk;
     fd->free_data.bk = bk;
     bk->free_data.fd = fd;
+
+    int i = get_bin_index(chunk_size(node));
+    if (info.bins[i].free_data.fd == &info.bins[i])
+        info.bins_status &= ~(1 << i);
 }
 #include <stdio.h>
 void    insert_node(t_mchunk *prev, t_mchunk *node) {

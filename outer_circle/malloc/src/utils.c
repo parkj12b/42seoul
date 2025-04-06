@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:02:25 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/06 22:53:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/07 00:10:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ size_t align_page(size_t size) {
     return (size + info.pagesize - 1) & ~(info.pagesize - 1);
 }
 
+#include <stdio.h>
+
 static void init_heap(t_malloc_info *info) {
     t_mchunk    *cur = info->heap_start;
     t_mchunk    *prev = NULL;
@@ -40,8 +42,11 @@ static void init_heap(t_malloc_info *info) {
 
     while ((void *)cur + INIT_CHUNK_SIZE <= heap_end) {
         cur->size = INIT_CHUNK_SIZE;
-        cur->prev_size = prev ? prev->size : 0;
-        clear_prev_inuse(cur);
+        cur->prev_size = prev ? INIT_CHUNK_SIZE : 0;
+        if (!prev) {
+            set_prev_inuse(cur);
+            printf("it should be true: %d %p\n", prev_inuse(cur), cur);
+        }
 
         // Do NOT manually link fd/bk — just insert into the bin
         insert_node(&(info->bins[HPAGE_IDX]), cur);
