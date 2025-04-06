@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "stddef.h": "c",
+        "stdlib.h": "c",
+        "dlmalloc.h": "c",
+        "malloc.h": "c",
+        "bins.h": "c",
+        "globals.h": "c",
+        "utils.h": "c",
+        "dldllist.h": "c",
+        "mman.h": "c",
+        "dlmchunk.h": "c",
+        "dlconfig.h": "c",
+        "unistd.h": "c",
+        "stdio.h": "c"
+    }
+}
