@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 22:07:37 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/06 23:29:50 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:46:47 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "utils.h"
 #include "dldllist.h"
 #include "dlmchunk.h"
+#include "log.h"
 
 /**
  * logarithmic bin mapping
@@ -84,8 +85,8 @@ t_mchunk *get_bestfit_chunk(int i, size_t size) {
 
     if (cur == bin)
         return NULL;
-    printf("bin: %p\n", bin);
-    printf("cur: %p\n", cur);
+    DLOG(printf("bin: %p\n", bin);)
+    DLOG(printf("cur: %p\n", cur);)
     while (cur != &info.bins[i] && chunk_size(cur) > size) {
         cur = cur->free_data.fd;
     }

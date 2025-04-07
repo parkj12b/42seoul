@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:02:25 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/07 00:10:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:28:40 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "dldllist.h"
 #include "dlmalloc.h"
 #include "dlconfig.h"
+#include "log.h"
 
 /**
  * round memory address up to step aligned
@@ -45,7 +46,7 @@ static void init_heap(t_malloc_info *info) {
         cur->prev_size = prev ? INIT_CHUNK_SIZE : 0;
         if (!prev) {
             set_prev_inuse(cur);
-            printf("it should be true: %d %p\n", prev_inuse(cur), cur);
+            DLOG(printf("it should be true: %d %p\n", prev_inuse(cur), cur);)
         }
 
         // Do NOT manually link fd/bk — just insert into the bin
@@ -53,8 +54,8 @@ static void init_heap(t_malloc_info *info) {
 
         #include <stdio.h>
         prev = cur;
-        printf("bk: %p\n", cur->free_data.bk);
-        printf("fd: %p\n", cur->free_data.fd);
+        DLOG(printf("bk: %p\n", cur->free_data.bk);)
+        DLOG(printf("fd: %p\n", cur->free_data.fd);)
         cur = (t_mchunk *)((char *)cur + INIT_CHUNK_SIZE);
     }
     info->bins_status |= (1 << HPAGE_IDX);
@@ -71,7 +72,6 @@ void    init_malloc_info(t_malloc_info *info) {
     cur = cur->free_data.fd;
     while (cur != &info->bins[HPAGE_IDX])
     {
-        write(1, "hi\n", 3);
         cur = cur->free_data.fd;
     }
 }

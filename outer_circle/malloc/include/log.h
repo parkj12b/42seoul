@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   globals.c                                          :+:      :+:    :+:   */
+/*   log.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 00:00:59 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/07 16:28:42 by minsepar         ###   ########.fr       */
+/*   Created: 2025/04/07 13:44:28 by minsepar          #+#    #+#             */
+/*   Updated: 2025/04/07 13:46:22 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dlmalloc.h"
-#include "utils.h"
+#ifndef LOG_H
+# define LOG_H
 
-t_malloc_info   info;
+# ifdef DEBUG
+#  define DLOG(x) x
+# else
+#  define DLOG(x)
+# endif
 
-__attribute__((constructor))
-static void init_malloc_library(void) {
-    init_malloc_info(&info);
-}
+#endif

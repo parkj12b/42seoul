@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 17:43:31 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/06 22:42:03 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:03:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@
 # define HEADER_PAD         16
 
 # define MUNMAP_LIMIT       128 * 1024 * 1024
-// # define HEAP_SIZE          16 * 1024 * 1024
-# define HEAP_SIZE          8 * 1024
+# define HEAP_SIZE          16 * 1024 * 1024
+// # define HEAP_SIZE          8 * 1024
+
+/* malloc_flag */
+# define IN_MALLOC 0x1
 
 #endif

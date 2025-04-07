@@ -12,6 +12,8 @@
         "dlmchunk.h": "c",
         "dlconfig.h": "c",
         "unistd.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "random": "c",
+        "string.h": "c"
     }
 }

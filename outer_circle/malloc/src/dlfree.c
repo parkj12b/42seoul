@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:23:23 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/07 00:11:01 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:47:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@
 #include "bins.h"
 #include "globals.h"
 #include "utils.h"
+#include "log.h"
 
 static t_mchunk    *coalescing(t_mchunk *cur) {
     t_mchunk    *next = next_chunk(cur);
     t_mchunk    *prev = NULL;
 
-    printf("is prev in use?: %d\n", prev_inuse(cur));
+    DLOG(printf("is prev in use?: %d\n", prev_inuse(cur));)
     if (!prev_inuse(cur)) {
-        printf("cur: %p, prev_size: %ld\n", cur, cur->prev_size);
+        DLOG(printf("cur: %p, prev_size: %ld\n", cur, cur->prev_size);)
         prev = (t_mchunk *)((char *)cur - cur->prev_size);
         unlink_chunk(prev);
         prev->size += chunk_size(cur);
@@ -45,7 +46,7 @@ static t_mchunk    *coalescing(t_mchunk *cur) {
 void    free(void *ptr) {
     static int numfree = 0;
     numfree++;
-    printf("numfree: %d\n", numfree);
+    DLOG(printf("numfree: %d\n", numfree);)
     if (!ptr) return;
     t_mchunk    *chunk = (t_mchunk *)((char *)ptr - HEADER_PAD);
 

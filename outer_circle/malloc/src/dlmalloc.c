@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:50:58 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/07 00:03:17 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:29:08 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include "globals.h"
 #include "dldllist.h"
 #include "utils.h"
-
+#include "log.h"
 
 void *sys_alloc(size_t size) {
     void *ptr =  mmap(
@@ -42,7 +42,7 @@ void *sys_alloc(size_t size) {
 /**
  * helper function to split chunk if chunk too large.
  */
-static t_mchunk *split_chunk(t_mchunk *chunk, size_t size) {
+t_mchunk *split_chunk(t_mchunk *chunk, size_t size) {
     size_t next_chunk_size = chunk_size(chunk) - size;
     set_chunk_size(chunk, size);
     
@@ -72,8 +72,8 @@ static t_mchunk *find_fit(size_t size) {
             return_chunk = get_bestfit_chunk(counter, size);
         counter++;
     }
-    printf("return_chunk: %p\n", return_chunk);
-    printf("can't be %p\n", info.bins[HPAGE_IDX].free_data.fd);
+    DLOG(printf("return_chunk: %p\n", return_chunk);)
+    DLOG(printf("can't be %p\n", info.bins[HPAGE_IDX].free_data.fd);)
     if (counter >= NBIN)
         return NULL;
     if (chunk_size(return_chunk) - size >= SBIN_MIN)
@@ -90,19 +90,17 @@ t_mchunk    *allocate_chunk(size_t size) {
     return return_chunk;
 }
 
-void    *ft_malloc(size_t size) {
-    static char *welcome = "calling custom malloc\n";
-    static char *success = "allocated ?\n";
-    static char *ohno = "error\n";
-    write(1, welcome, strlen(welcome));
+void    *malloc(size_t size) {
     t_mchunk    *chunk = NULL;
 
+    if (info.flags & IN_MALLOC) return NULL;
+    info.flags |= IN_MALLOC;
+    
     size_t  aligned_size = align_up(size + HEADER_PAD, SMALL_BIN_STEP);
     
     if (aligned_size <= info.pagesize / 2) {
         chunk = find_fit(aligned_size);
         if (chunk == NULL) {
-            write(1, ohno, strlen(ohno));
             errno = ENOMEM;
             return (NULL);
         }
@@ -110,6 +108,15 @@ void    *ft_malloc(size_t size) {
     }
     else
         chunk = allocate_chunk(aligned_size);
-    write(1, success, strlen(success));
+    info.flags &= ~(IN_MALLOC);
     return chunk->user_data;
+}
+
+void    *calloc(size_t nmemb, size_t size) {
+    size_t total = nmemb * size;
+    if (size != 0 && total / size != nmemb)
+        return NULL;
+    void    *ptr = malloc(total);
+    memset(ptr, 0, size);
+    return ptr;
 }
