@@ -1,5 +1,9 @@
 {
     "files.associations": {
+        "*.sqlbook": "sql",
+        "*.ndjson": "jsonl",
+        "*.dbclient-js": "javascript",
+        "tpp": "c++",
         "stddef.h": "c",
         "stdlib.h": "c",
         "dlmalloc.h": "c",
@@ -14,6 +18,9 @@
         "unistd.h": "c",
         "stdio.h": "c",
         "random": "c",
-        "string.h": "c"
-    }
+        "string.h": "c",
+        "assert.h": "c",
+        "macros.h": "c"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }

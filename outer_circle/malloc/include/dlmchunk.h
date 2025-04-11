@@ -1,21 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   dlmchunk.h                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 22:33:48 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/07 00:08:57 by minsepar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef DLMCHUNK_H
 # define DLMCHUNK_H
 
 # include <stddef.h>
-# include "dlconfig.h"
-
 typedef struct s_malloc_chunk {
     size_t prev_size; // only valid if previous chunk is free
     size_t size;      // contains size + prev_inuse bit
@@ -28,6 +14,7 @@ typedef struct s_malloc_chunk {
     };
 } t_mchunk;
 
+#define PREV_INUSE 0x1
 
 static inline size_t chunk_size(t_mchunk *chunk) {
     return chunk->size & ~(PREV_INUSE);

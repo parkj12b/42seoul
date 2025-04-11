@@ -1,26 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   bins.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 22:07:37 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/07 13:46:47 by minsepar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "dlmalloc.h"
 #include "bins.h"
-#include "globals.h"
-#include "utils.h"
-#include "dldllist.h"
 #include "dlmchunk.h"
-#include "log.h"
+#include "globals.h"
+#include "macros.h"
+#include "dldllist.h"
 
-/**
- * logarithmic bin mapping
- */
 static int get_lbin_index(size_t size) {
     int index = LBIN_START;
 
@@ -34,7 +17,7 @@ static int get_lbin_index(size_t size) {
 }
 
 static int get_sbin_index(size_t size) {
-    return ((align_up(size, SMALL_BIN_STEP) - 16) / SMALL_BIN_STEP) - 1;
+    return ((ALIGN(size) - 16) / SBIN_STEP) - 1;
 }
 
 int get_bin_index(size_t size) {
@@ -47,7 +30,8 @@ int get_bin_index(size_t size) {
 
 void    insert_chunk(t_mchunk *chunk) {
     int i;
-
+    if (chunk_size(chunk) < MIN_BLOCK_SIZE)
+        return ;
     i = get_bin_index(chunk_size(chunk));
     if (chunk_size(chunk) <= SBIN_MAX) {
         insert_node(&info.bins[i], chunk);
@@ -85,8 +69,6 @@ t_mchunk *get_bestfit_chunk(int i, size_t size) {
 
     if (cur == bin)
         return NULL;
-    DLOG(printf("bin: %p\n", bin);)
-    DLOG(printf("cur: %p\n", cur);)
     while (cur != &info.bins[i] && chunk_size(cur) > size) {
         cur = cur->free_data.fd;
     }

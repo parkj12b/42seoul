@@ -1,20 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   globals.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 23:59:56 by minsepar          #+#    #+#             */
-/*   Updated: 2025/04/06 00:04:59 by minsepar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef GLOBALS_H
 # define GLOBALS_H
+# include <stddef.h>
+# include "dlmchunk.h"
+# include "macros.h"
+typedef struct s_malloc_data {
+	size_t		pagesize;
+	size_t		bins_status;
+	void		*heap_start; // base address of the memory pool
+	t_mchunk 	bins[NBINS];
+	int			flags;
+} t_mdata;
 
-# include "dlmalloc.h"
-
-extern t_malloc_info info;
+extern t_mdata info;
 
 #endif
