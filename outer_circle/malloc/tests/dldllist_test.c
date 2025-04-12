@@ -16,6 +16,8 @@ void test_init_bin() {
 void test_unlink_chunk() {
 	t_mchunk bin, node1, node2;
 	init_bin(&bin);
+	node1.size = 100;
+	node2.size = 200;
 	insert_node(&bin, &node1);
 	insert_node(&node1, &node2);
 

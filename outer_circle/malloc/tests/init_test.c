@@ -5,10 +5,13 @@
 #include "dldllist.h"
 #include "bins.h"
 #include "dlmalloc.h"
+#include "log.h"
+#include "test.h"
 
 void test_init_heap_basic() {
-    init_malloc_info(); // This now includes init_heap
-
+    reset_heap();
+    void *str = malloc(0); // Initialize the heap
+    (void) str;
     // Verify that the heap start is not NULL
     assert(info.heap_start != NULL);
 
@@ -22,17 +25,18 @@ void test_init_heap_basic() {
 
     // Verify that the heap contains chunks in the expected bin
     t_mchunk *cur = info.bins[HPAGE_IDX].free_data.fd;
-    while (cur != &info.bins[HPAGE_IDX]) {
-        assert(cur->size == HPAGE_SIZE);
+    while (cur->free_data.fd != &info.bins[HPAGE_IDX]) {
+        assert(chunk_size(cur) == HPAGE_SIZE);
         cur = cur->free_data.fd;
     }
+    assert(cur->size == HPAGE_SIZE - FOOTER_SIZE);
+    cur = next_chunk(cur);
+    assert(cur->size == FOOTER_SIZE);
 
     printf("test_init_heap_basic passed\n");
 }
 
 void test_init_heap_edge_case() {
-    init_malloc_info(); // This now includes init_heap
-
     // Verify that the last chunk is properly marked
     t_mchunk *last_chunk = (t_mchunk *)((char *)info.heap_start + CHUNK_SIZE - FOOTER_SIZE);
     assert(last_chunk->size == FOOTER_SIZE);
@@ -42,8 +46,6 @@ void test_init_heap_edge_case() {
 }
 
 void test_all_chunks_in_bins() {
-    init_malloc_info(); // This now includes init_heap
-
     // Iterate through all bins
     for (int i = 0; i < NBINS; i++) {
         t_mchunk *cur = info.bins[i].free_data.fd;
@@ -55,7 +57,9 @@ void test_all_chunks_in_bins() {
 
             // Check if the chunk size matches the bin index
             if (i == HPAGE_IDX) {
-                assert(chunk_size(cur) == HPAGE_SIZE);
+                assert(chunk_size(cur) == HPAGE_SIZE 
+                    || chunk_size(cur) == FOOTER_SIZE
+                    || chunk_size(cur) == HPAGE_SIZE - FOOTER_SIZE);
             } else if (i < HPAGE_IDX) {
                 assert(chunk_size(cur) <= SBIN_MAX);
             }

@@ -14,4 +14,16 @@ void test_init_heap_basic();
 void test_init_heap_edge_case();
 void test_all_chunks_in_bins();
 
+/* malloc_free_test.c */
+
+void test_malloc_and_free();
+
+/* realloc_test.c */
+void test_realloc();
+
+/* calloc_test.c */
+void test_calloc();
+
+/* utils.c */
+void reset_heap();
 #endif

@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "macros.h"
 #include "dldllist.h"
+#include "dlmalloc.h"
 
 static int get_lbin_index(size_t size) {
     int index = LBIN_START;
@@ -27,11 +28,14 @@ int get_bin_index(size_t size) {
         return get_lbin_index(size);
     }
 }
+#include <stdlib.h>
 
 void    insert_chunk(t_mchunk *chunk) {
     int i;
     if (chunk_size(chunk) < MIN_BLOCK_SIZE)
         return ;
+    if (!is_valid_heap(chunk))
+        abort();
     i = get_bin_index(chunk_size(chunk));
     if (chunk_size(chunk) <= SBIN_MAX) {
         insert_node(&info.bins[i], chunk);
@@ -76,7 +80,8 @@ t_mchunk *get_bestfit_chunk(int i, size_t size) {
         unlink_chunk(cur);
         return cur;
     }
-    
+    if (cur == bin->free_data.fd)
+        return NULL;
     t_mchunk    *temp = cur->free_data.bk;
     unlink_chunk(temp);
     return temp;

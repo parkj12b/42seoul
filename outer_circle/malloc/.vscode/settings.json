@@ -20,7 +20,14 @@
         "random": "c",
         "string.h": "c",
         "assert.h": "c",
-        "macros.h": "c"
+        "macros.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "format": "c",
+        "initializer_list": "c",
+        "span": "c",
+        "inttypes.h": "c",
+        "test.h": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }
