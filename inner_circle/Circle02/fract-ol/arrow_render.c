@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arrow_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jacob <jacob@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 21:18:59 by minsepar          #+#    #+#             */
-/*   Updated: 2023/12/30 21:19:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/09/17 21:57:10 by jacob            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,28 @@ void	shift_pixel_up(t_arrow *arrow, t_fractal *fractal)
 
 void	render_arrow(int keypress, t_fractal *fractal)
 {
-	t_arrow	arrow;
+	t_arrow arrow;
 
 	arrow.data_dst = &fractal->img[fractal->frame_count];
 	arrow.data_from = &fractal->img[(fractal->frame_count + 1) % 2];
-	if (keypress == 123)
-		render_arrow_left(&arrow, fractal);
-	else if (keypress == 124)
-		render_arrow_right(&arrow, fractal);
-	else if (keypress == 125)
-		render_arrow_down(&arrow, fractal);
-	else if (keypress == 126)
-		render_arrow_up(&arrow, fractal);
+
+	switch (keypress)
+	{
+		case 123: case 65361:
+			render_arrow_left(&arrow, fractal);
+			break;
+		case 124: case 65363:
+			render_arrow_right(&arrow, fractal);
+			break;
+		case 125: case 65364:
+			render_arrow_down(&arrow, fractal);
+			break;
+		case 126: case 65362:
+			render_arrow_up(&arrow, fractal);
+			break;
+		default:
+			break;
+	}
 	calculate_fractal_arrow(&arrow, fractal);
 	mlx_put_image_to_window(fractal->mlx, fractal->mlx_win,
 		fractal->img[fractal->frame_count].img, 0, 0);

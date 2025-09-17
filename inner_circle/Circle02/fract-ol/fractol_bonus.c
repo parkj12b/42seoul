@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fractol_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jacob <jacob@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:06:17 by minsepar          #+#    #+#             */
-/*   Updated: 2023/12/31 14:45:36 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/09/17 23:12:24 by jacob            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol_bonus.h"
+#include <omp.h>
 
 void	render_fractal(t_fractal *fractal)
 {
@@ -58,28 +59,30 @@ void	test_divergence_ship(t_fractal *fractal)
 
 void	calculate_fractal(t_fractal *fractal)
 {
-	fractal->x = 0;
-	fractal->y = 0;
-	while (fractal->y < HEIGHT)
+	int x, y;
+
+	#pragma omp parallel for private(x, y) schedule(dynamic)
+	for (int i = 0; i < WIDTH * HEIGHT; i++)
 	{
-		while (fractal->x < WIDTH)
-		{
-			fractal->init_calculation[fractal->type - 1](fractal);
-			if (fractal->type == 3)
-				test_divergence_ship(fractal);
-			else
-				test_divergence(fractal);
-			if (fractal->iteration < 100)
-				my_mlx_pixel_put(&(fractal->img[fractal->frame_count]),
-					fractal->x, fractal->y,
-					fractal->color * fractal->iteration);
-			else
-				my_mlx_pixel_put(&(fractal->img[fractal->frame_count]),
-					fractal->x, fractal->y, 0x00000000);
-			fractal->x++;
-		}
-		fractal->y++;
-		fractal->x = 0;
+		x = i % WIDTH;
+		y = i / WIDTH;
+
+		// Create a local copy of fractal for thread safety
+		t_fractal local_fractal = *fractal;
+		local_fractal.x = x;
+		local_fractal.y = y;
+		local_fractal.init_calculation[local_fractal.type - 1](&local_fractal);
+		if (local_fractal.type == 3)
+			test_divergence_ship(&local_fractal);
+		else
+			test_divergence(&local_fractal);
+		if (local_fractal.iteration < 100)
+			my_mlx_pixel_put(&(fractal->img[fractal->frame_count]),
+				x, y,
+				fractal->color * local_fractal.iteration);
+		else
+			my_mlx_pixel_put(&(fractal->img[fractal->frame_count]),
+				x, y, 0x00000000);
 	}
 }
 
@@ -91,8 +94,9 @@ int	main(int argc, char **argv)
 	fractal_init2(&fractal);
 	parse_input(&fractal, argc, argv);
 	render_fractal(&fractal);
-	mlx_hook(fractal.mlx_win, 04, 0L, mouse_down, &fractal);
+	// mlx_hook(fractal.mlx_win, 04, 0L, mouse_down, &fractal);
+	mlx_mouse_hook(fractal.mlx_win, mouse_down, &fractal);
 	mlx_hook(fractal.mlx_win, 17, 0L, terminate_program, &fractal);
-	mlx_hook(fractal.mlx_win, 02, 0L, key_down, &fractal);
+	mlx_hook(fractal.mlx_win, 02, (1L << 0), key_down, &fractal);
 	mlx_loop(fractal.mlx);
 }

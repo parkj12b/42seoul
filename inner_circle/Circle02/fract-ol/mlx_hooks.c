@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jacob <jacob@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 21:14:55 by minsepar          #+#    #+#             */
-/*   Updated: 2023/12/31 17:59:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/09/17 21:35:38 by jacob            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	handle_mousedown(int button, int x, int y, void *param)
 
 int	mouse_down(int button, int x, int y, void *param)
 {
+	printf("mouse button: %d at (%d, %d)\n", button, x, y);
 	t_fractal	*fractal;
 	double		x_old;
 	double		y_old;

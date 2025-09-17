@@ -1,0 +1,91 @@
+# Compiled binaries and executables
+*.o
+*.a
+*.out
+a.out
+*.exe
+*.so
+*.dylib
+
+# Debug symbols
+*.dSYM/
+*.gch
+
+# Build directories
+build/
+dist/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Language specific
+# C/C++
+*.obj
+*.lib
+*.dll
+*.pdb
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# OS generated files
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Project specific
+# MLX library files (but keep source code)
+mlx/libmlx.a
+mlx/*.o
+mlx/mlx_app
+
+# But allow minilibx-linux source code
+!minilibx-linux/
+
+# Test files
+test
+testfile
+*.test
+
+# Configuration files that might contain sensitive data
+.env
+.env.local
+.env.*.local
+
+# Core dumps
+core
+core.*
+
+# Valgrind output
+vgcore.*

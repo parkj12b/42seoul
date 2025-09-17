@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jacob <jacob@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 21:14:55 by minsepar          #+#    #+#             */
-/*   Updated: 2023/12/31 18:01:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2025/09/17 21:56:38 by jacob            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,28 @@ void	on_enter(t_fractal *fractal)
 	render_fractal(fractal);
 }
 
+#include <stdio.h>
 int	key_down(int keypress, void *param)
 {
-	t_fractal	*fractal;
+	t_fractal *fractal = (t_fractal *)param;
 
-	fractal = (t_fractal *) param;
-	if (keypress == 53)
-		on_escape(fractal);
-	else if (keypress == 36)
-		on_enter(fractal);
-	else if (keypress == 123 || keypress == 124
-		|| keypress == 125 || keypress == 126)
-		render_arrow(keypress, fractal);
+	switch (keypress)
+	{
+		case 53:    // ESC (Mac)
+		case 65307: // ESC (Linux)
+			on_escape(fractal);
+			break;
+		case 36:    // ENTER (Mac)
+		case 65293: // ENTER (Linux)
+			on_enter(fractal);
+			break;
+		case 123: case 124: case 125: case 126:     // Arrow keys (Mac)
+		case 65361: case 65362: case 65363: case 65364: // Arrow keys (Linux)
+			render_arrow(keypress, fractal);
+			break;
+		default:
+			break;
+	}
 	return (1);
 }
 
